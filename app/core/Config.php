@@ -1,7 +1,7 @@
 <?php
 
 
-$config['mysql']['address']		= "spaceweb.se";
-$config['mysql']['database']	= "spaceweb_fragtime";
-$config['mysql']['username']	= "spaceweb_frag";
-$config['mysql']['password'] 	= "nBI9suxGCN";
+$config['mysql']['address']		= "85.24.194.56";
+$config['mysql']['database']	= "thelodge";
+$config['mysql']['username']	= "root";
+$config['mysql']['password'] 	= "Carlanders269";

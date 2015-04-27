@@ -13,6 +13,10 @@
 	</head>
 	<body>
 	<div class="page">
+		<div class="badge">
+			<h4>Säkra betalningar via</h4>
+			<a href="//klarna.se"><img src="https://cdn.klarna.com/1.0/shared/image/generic/logo/sv_se/basic/blue-black.png?width=200"></a>
+		</div>
 		<div class="header">
 			<div id="logoContainer">
 				<a href="http://thelodge.se" class="logo"><img src="/assets/logo.png"></a>

@@ -63,7 +63,7 @@
 		*
 		*
 		**/
-		public function querySecured($statement, $params=null, $params2=null, $params3=null, $params4=null, $params5=null, $params6=null){
+		public function query($statement, $params=null, $params2=null, $params3=null, $params4=null, $params5=null, $params6=null){
 		
 			//Prepare sql-statment with ? at values
 			$query = $this->pdo->prepare($statement);
