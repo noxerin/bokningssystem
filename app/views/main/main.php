@@ -14,7 +14,7 @@
 				echo "
 				<div class='item' data-id='" . $row['id'] . "'>
 					<img src='/assets/images/" . $row['src'] . "'>
-					<i class='fa fa-circle-o fa-3x selected'></i>
+					<i class='fa fa-check fa-3x selected'></i>
 				</div>";
 			}else{
 				echo "
@@ -32,9 +32,7 @@
 	<div class="textcontainer">
 		<textarea name="message" class="textarea" placeholder="Skriv ett medelande"><?=$_SESSION['message']?></textarea>
 	</div>
-	<div class="textcontainer">
-		<input type="submit" value="Nästa: Välj upplevelse" class="btn">
-	</div>
+		<input type="submit" value="Nästa: Välj upplevelse" class="btn" style="margin-right: 20px;">
 </form>
 <script>
 	$(document).ready(function(){
@@ -43,8 +41,8 @@
 	});
 	
 	$(".item").on("click", function(){
-		$(".item i").removeClass("selected");
-		$(this).find("i").addClass("selected");
+		$(".item i").removeClass("selected fa-check").addClass("fa-circle-o");
+		$(this).find("i").removeClass('fa-circle-o').addClass("selected fa-check");
 		var id = $(this).data("id");
 		$("#imageid").val(id);
 	});

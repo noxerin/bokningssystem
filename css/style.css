@@ -203,6 +203,7 @@ a, a:hover{
 	display: inline-block;
 	overflow: hidden;
 	position: relative;
+	cursor: pointer;
 }
 .item i{
 	position: absolute;
