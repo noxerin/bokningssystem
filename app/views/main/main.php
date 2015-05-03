@@ -32,8 +32,12 @@
 	<div class="textcontainer">
 		<textarea name="message" class="textarea" placeholder="Skriv ett medelande"><?=$_SESSION['message']?></textarea>
 	</div>
-		<input type="submit" value="Nästa: Välj upplevelse" class="btn" style="margin-right: 20px;">
+	<div class="infobox">
+		<p>Skriv ett meddelande, för att göra ditt presentkort lite mer personligt</p>
+		<input type="submit" value="Nästa: Välj upplevelse" class="btn" style="right: 20px; position: absolute; bottom: 20px;">	
+	</div>
 </form>
+
 <script>
 	$(document).ready(function(){
 		var id = $(".selected").parent('.item').data('id');

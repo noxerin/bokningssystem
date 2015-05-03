@@ -43,7 +43,7 @@
 		<div class="menu">
 			<a href="//thelodge.se">
 				<div class="menu-item">
-					Tillbaka till hotellet
+					TILLBAKA TILL HOTELLET
 				</div>
 			</a>
 		</div>

@@ -23,13 +23,27 @@ class Main extends Controller
 		$this->view('main/partials/footer');
 	}
 	
-	public function productsInfo(){
+	public function productssecond(){
 		$product = $this->model('model_product');
 		
 		$products = $product->getProduct($_SESSION['product']);
 		
 		$this->view('main/partials/header', "The Lodge - Presentkort");
-		$this->view('main/products_info', $products);
+		$this->view('main/products_second', $products);
+		$this->view('main/partials/footer');
+	}
+	
+	public function preview(){
+		$images = $this->model('model_images');
+		$product = $this->model('model_product');
+			
+		$image = $images->getImage($_SESSION['image']);
+		$products = $product->getProduct($_SESSION['product']);
+		$data[0] = $image[0];
+		$data[1] = $products[0];
+		
+		$this->view('main/partials/header', "The Lodge - Presentkort");
+		$this->view('main/preview', $data);
 		$this->view('main/partials/footer');
 	}
 	
@@ -46,11 +60,17 @@ class Main extends Controller
 					$headTo = "/products";
 					$this->nxi_error('Du har inte valt någon upplevelse!', '');
 				}else{
-					$headTo = "/productsinfo";
+					$headTo = "/productssecond";
 				}
 				$_SESSION['product'] = $_POST['product'];
 				break;
-			case "extra":
+			case "categorieschoice":
+				$headTo = "/preview";
+				if($_POST['count'] > 0 && $_POST['count'] <= 12){
+					$_SESSION['count'] = $_POST['count'];	
+				}else{
+					$this->nxi_error("Du ar valt antingen för många eller för få antal!", "");
+				}
 				break;
 		}
 		header("Location: $headTo");

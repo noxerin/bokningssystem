@@ -1,12 +1,7 @@
 <div class="textcontainer">
-	<h1>Presentkort</h1>
-	<p>Nu är det dags att välja den upplevelsen som du vill ge bort<p>
-	<p>Välj en upplevelse</p>
-</div>
-<div class="dottedborder"></div>
-<div class="textcontainer">
 	<h2 style="font-size: 22px; text-align: center;">Välj en kategori</h2>
 </div>
+<div class="dottedborder"></div>
 <div class="itemcontainer">
 	<?php 
 		foreach($data as $row){

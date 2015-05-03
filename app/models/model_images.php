@@ -10,4 +10,15 @@ class model_images
 				images";
 		return $GLOBALS['db']->query($sql);
 	}	
+	
+	public function getImage($id){
+		$sql = "
+			SELECT
+				*
+			FROM
+				images
+			WHERE
+				id = ?";
+		return $GLOBALS['db']->query($sql, $id);
+	}
 }
