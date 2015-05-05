@@ -33,6 +33,17 @@ class Main extends Controller
 		$this->view('main/partials/footer');
 	}
 	
+	public function extras(){
+		$product = $this->model('model_product');
+		$extra = $this->model('model_extras');
+		
+		$extras = $extra->getExtras($_SESSION['product']);
+		
+		$this->view('main/partials/header', "The Lodge - Presentkort");
+		$this->view('main/extras', $extras);
+		$this->view('main/partials/footer');
+	}
+	
 	public function preview(){
 		$images = $this->model('model_images');
 		$product = $this->model('model_product');
@@ -65,7 +76,7 @@ class Main extends Controller
 				$_SESSION['product'] = $_POST['product'];
 				break;
 			case "categorieschoice":
-				$headTo = "/preview";
+				$headTo = "/extras";
 				if($_POST['count'] > 0 && $_POST['count'] <= 12){
 					$_SESSION['count'] = $_POST['count'];	
 				}else{

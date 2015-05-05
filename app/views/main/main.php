@@ -1,6 +1,6 @@
 <div class="textcontainer">
 	<h1>Presentkort</h1>
-	<p>Första steget för att skapa ett presentkort är att bestämma en design.<p>
+	<p>Först bestämm en design.<p>
 	<p>Välj ett motiv och skriv ett passande text till ditt presentkort</p>
 </div>
 <div class="dottedborder"></div>
