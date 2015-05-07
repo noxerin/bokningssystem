@@ -59,6 +59,10 @@ footer, header, hgroup, menu, nav, section {
 	font-family: applegaramond-italic;
 	src: url('/assets/fonts/AppleGaramond-lightitalic.ttf');
 }
+@fomt-face{
+	font-family: oranienbaum;
+	src: url('/assets/fonts/Oranienbaum.ttf');
+}
 
 html,body{
 	min-width: 1050px;
@@ -67,7 +71,7 @@ html,body{
     background-attachment: fixed;
     background-position: center; 
 	margin: 0;
-	font-family: applegaramond;
+	font-family: oranienbaum;
 	color: #61614c;
 }
 a, a:hover{

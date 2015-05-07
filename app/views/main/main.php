@@ -1,5 +1,5 @@
 <div class="textcontainer">
-	<h1>Presentkort</h1>
+	<h1>PRESENTKORT</h1>
 	<p>Först bestämm en design.<p>
 	<p>Välj ett motiv och skriv ett passande text till ditt presentkort</p>
 </div>
