@@ -8,7 +8,14 @@
 				<div class="item">
 					<img src="/assets/images/' . $data[0]['src'] . '">
 					<h1>' . $_SESSION['count'] . ' st ' . $data[1]['name'] . '</h1>
-					<p class="info">' . $data[1]['desc'] . '</p>
+					<p class="info">' . $data[1]['desc'] . '</p>';
+			if(strlen($_SESSION['extras'][0]) > 0){
+				echo "extras";
+			}
+				var_dump($_SESSION['extras']);
+					
+					
+			echo '
 					<div class="dottedborder" style="border-color: #898989;"></div>
 					<h2>' . $_SESSION['message'] . '</h2>
 				</div>';

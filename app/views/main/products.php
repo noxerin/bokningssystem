@@ -33,7 +33,7 @@
 	?>
 </div>
 <form action="/save/category" method="post">
-	<input type="hidden" value="none" name="product" id="productid">
+	<input type="hidden" value="" name="product" id="productid">
 	<input type="submit" value="Nästa: Mer info" class="btn" style="margin-right: 20px;">
 </form>
 <script>

@@ -44,7 +44,7 @@ class Main extends Controller
 		$this->view('main/partials/footer');
 	}
 	
-	public function preview(){
+	public function preview(){	
 		$images = $this->model('model_images');
 		$product = $this->model('model_product');
 			
@@ -67,20 +67,29 @@ class Main extends Controller
 				$_SESSION['message'] = $_POST['message'];
 				break;
 			case "category":
-				if($_POST['product'] == "none"){
+				if($_POST['product'] <= 0){
 					$headTo = "/products";
 					$this->nxi_error('Du har inte valt någon upplevelse!', '');
 				}else{
 					$headTo = "/productssecond";
+					$_SESSION['product'] = $_POST['product'];
 				}
-				$_SESSION['product'] = $_POST['product'];
 				break;
 			case "categorieschoice":
 				$headTo = "/extras";
 				if($_POST['count'] > 0 && $_POST['count'] <= 12){
 					$_SESSION['count'] = $_POST['count'];	
-				}else{
+				}else{		
+					$headTo = "/productssecond";
 					$this->nxi_error("Du ar valt antingen för många eller för få antal!", "");
+				}
+				break;
+			case "extras":
+				$headTo = "/preview";
+				if(isset($_POST['extras']) && strlen($_POST['extras'][0]) >= 1){
+					$_SESSION['extras'] = explode(",", $_POST['extras']);
+				}else{
+					$_SESSION['extras'] = "";
 				}
 				break;
 		}

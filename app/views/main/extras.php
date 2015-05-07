@@ -5,7 +5,7 @@
 <div class="itemcontainer">
 	<?php 
 		foreach($data as $row){
-			if(isset($_SESSION['products'])){
+			if(in_array($row['id'], $_SESSION['extras'])){
 				echo '
 				<div class="item" data-id="' . $row['id'] . '">
 					<img src="/assets/images/' . $row['image'] . '">
@@ -24,22 +24,33 @@
 		}		
 	?>
 </div>
-<form action="/save/image" method="post">
-	<input type="hidden" value="1" name="image" id="imageid">
+<form action="/save/extras" method="post">
+	<input type="hidden" value="" name="extras" id="extras">
 		<input type="submit" value="Nästa: Välj upplevelse" class="btn" style="right: 20px; position: absolute; bottom: 20px;">	
 </form>
 
 <script>
 	$(document).ready(function(){
-		var id = $(".selected").parent('.item').data('id');
-		$("#imageid").val(id);
+		var allAttributes = $('.item').map(function(){
+			if($(this).find('i').hasClass("selected")){
+				return $(this).data('id');				
+			}
+		}).get();
+		$("#extras").val(allAttributes);
 	});
 	
 	$(".item").on("click", function(){
-		$(".item i").removeClass("selected fa-check").addClass("fa-circle-o");
-		$(this).find("i").removeClass('fa-circle-o').addClass("selected fa-check");
-		var id = $(this).data("id");
-		$("#imageid").val(id);
+		if($(this).find("i").hasClass("selected")){
+			$(this).find("i").removeClass("selected fa-check").addClass("fa-circle-o");
+		}else{
+	 		$(this).find("i").removeClass('fa-circle-o').addClass("selected fa-check");			
+		}
+		var allAttributes = $('.item').map(function(){
+			if($(this).find('i').hasClass("selected")){
+				return $(this).data('id');				
+			}
+		}).get();
+		$("#extras").val(allAttributes);
 	});
 </script>
 <style>

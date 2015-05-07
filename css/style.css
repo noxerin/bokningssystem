@@ -59,7 +59,7 @@ footer, header, hgroup, menu, nav, section {
 	font-family: applegaramond-italic;
 	src: url('/assets/fonts/AppleGaramond-lightitalic.ttf');
 }
-@fomt-face{
+@font-face{
 	font-family: oranienbaum;
 	src: url('/assets/fonts/Oranienbaum.ttf');
 }
