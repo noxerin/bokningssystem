@@ -7,21 +7,21 @@
 			echo '
 				<div class="item">
 					<img src="/assets/images/' . $data[0]['src'] . '">
-					<h1>' . $_SESSION['count'] . ' st ' . $data[1]['name'] . '</h1>
-					<p class="info">' . $data[1]['desc'] . '</p>';
-			if(strlen($_SESSION['extras'][0]) > 0){
-				echo "extras";
-			}
-				var_dump($_SESSION['extras']);
-					
-					
+					<h1>' . $_SESSION['count'] . ' st ' . $data[1]['name'] . '</h1>';
+				if(isset($data[2])){
+					echo "<h2 class='extra'><b>Och så nåt litet extra</b></h2>";
+					foreach($data[2] as $row){
+						echo "<p>" . $row['name'] . "</p>";
+					}
+				}				
 			echo '
+					<p class="info">' . $data[1]['desc'] . '</p>
 					<div class="dottedborder" style="border-color: #898989;"></div>
-					<h2>' . $_SESSION['message'] . '</h2>
+					<p class="message">' . $_SESSION['message'] . '</p>
 				</div>';
 	?>
 </div>
-<form action="/checkout" method="post">
+<form action="/save/accepted" method="post">
 	<input type="submit" value="Gå till kassa" class="btn" style="margin-right: 20px;">
 </form>
 <style>
@@ -39,17 +39,20 @@
 	height: 290px;
 	width: 700px;
 }
-.item h1{
+.item h1, h2{
 	color: #000;
 	text-align: center;
-	margin-top: 5px;
+	margin-top: 15px;
 	font-size: 24px;
 }
 .item h2{
+	font-size: 18px;
+}
+.message{
 	text-align: center;
 	margin-top: 5px;
 	line-height: 26px;
-	font-size: 22px;
+	font-size: 25px;
 	margin-bottom: 10px;
 	color: #000;
 	font-family: applegaramond-italic;
@@ -60,6 +63,10 @@
 }
 .info{
 	margin-top: 20px !important;
+}
+.extra{
+	margin-top: 20px;
+	margin-bottom: 5px;
 }
 .countcontainer{
 	width: 85px;

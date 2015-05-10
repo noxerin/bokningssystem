@@ -16,4 +16,22 @@ class model_extras
 		return $GLOBALS['db']->query($sql, $pid);
 	}	
 	
+	public function getSelected($ids){
+		$vars = "";
+		for($i = 0; count($ids) > $i; $i++){
+			$vars = $vars . "? ,";
+		}
+		$vars = rtrim($vars, ",");
+		$sql = "
+			SELECT
+				*
+			FROM
+				extras e
+			WHERE
+				e.id 
+					IN (" . $vars . ")";
+
+		return $GLOBALS['db']->query($sql, $ids);;	
+	}
+	
 }

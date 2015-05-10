@@ -5,20 +5,26 @@
 <div class="itemcontainer">
 	<?php 
 		foreach($data as $row){
+			$price = "";
+			if($row['type'] == "person"){
+				$price = $row['price'] . " kr / person";
+			}else if($row['type'] == "fixed"){
+				$price = $row['price'] . " kr";
+			}
 			if(in_array($row['id'], $_SESSION['extras'])){
 				echo '
 				<div class="item" data-id="' . $row['id'] . '">
 					<img src="/assets/images/' . $row['image'] . '">
 					<i class="fa fa-check fa-3x selected"></i>
 					<h1>' . $row['name'] . '</h1>
-					<p><b>' . $row['price'] . ' kr / person</b></p>
+					<p><b>' . $price . '</b></p>
 				</div>';
 			}else{
 				echo '<div class="item" data-id="' . $row['id'] . '">
 						<img src="/assets/images/' . $row['image'] . '">
 						<i class="fa fa-circle-o fa-3x"></i>
 						<h1>' . $row['name'] . '</h1>
-						<p><b>' . $row['price'] . ' kr / person</b></p>
+						<p><b>' . $price . '</b></p>
 					</div>';
 			}
 		}		
