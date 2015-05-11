@@ -44,7 +44,13 @@ class Main extends Controller
 		$this->view('main/partials/footer');
 	}
 	
-	public function preview(){	
+	public function preview(){
+		if(!isset($_SESSION['product'])){
+			header("Location: /");
+			$this->nxi_error('Du har inte accepterad designen och dina val. Detta kan bero på att du råkat hoppa över något val!', "Var god och försök igen, alla dina val ska vara sparade!");
+			die;
+		}
+		
 		$images = $this->model('model_images');
 		$product = $this->model('model_product');
 		$extra = $this->model('model_extras');

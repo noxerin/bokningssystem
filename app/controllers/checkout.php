@@ -3,9 +3,10 @@
 class Checkout extends Controller
 {
 	public function index(){
-		if($_SESSION['accepted'] != "yes"){
+		if(!isset($_SESSION['accepted'])){
+			header("Location: /preview");
 			$this->nxi_error('Du har inte accepterad designen och dina val. Detta kan bero på att du råkat hoppa över något val!', "Var god och försök igen, alla dina val ska vara sparade!");
-			header("Location: /");
+			die;
 		}
 		//Model import
 		
@@ -38,7 +39,7 @@ class Checkout extends Controller
 		$prepShipping = 75;
 		$personNummer = '4103219202';
 		//Email, Telephone not needed, Cellphone, First name, Last name, C/O not needed, Streed addr, zip code, City, Country, house number not needed, house ext not needed, PersonNnummer
-		$prepAddr = array('always_approvedd@klarna.com', '', '0762560000', 'Testperson-se', 'Apdproved', '', 'Stårgatan 1', '12345', 'Ankeborg', KlarnaCountry::SE, null, null, $personNummer);
+		$prepAddr = array('always_approved@klarna.com', '', '0762560000', 'Testperson-se', 'Approved', '', 'Stårgatan 1', '12345', 'Ankeborg', KlarnaCountry::SE, null, null, $personNummer);
 		
 		//Reserve the amount on the customers account
 		$resnumber = $klarna->makeReservation($prepArticle, $prepShipping, $prepAddr);

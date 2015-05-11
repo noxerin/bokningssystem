@@ -16,6 +16,7 @@ require_once "lib/Database.php";
 $db = new NXI\Database($config);
 
 require_once('lib/klarna/klarna.php');
+
 require_once('lib/klarna/transport/xmlrpc-3.0.0.beta/lib/xmlrpc.inc');
 require_once('lib/klarna/transport/xmlrpc-3.0.0.beta/lib/xmlrpc_wrappers.inc');
 $klarna = new Klarna();

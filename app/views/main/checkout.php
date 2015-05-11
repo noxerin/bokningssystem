@@ -36,24 +36,24 @@
 			</div>
 			<div class="iteminput">
 				<p>Efternamn * </p>
-				<input type="text" value="" name="buyer[ename]" class="inputfield">
+				<input type="text" value="" name="buyer[lname]" class="inputfield">
 			</div>
 		</div>
 		<div class="iteminputcontainer">
 			<div class="iteminput">
 				<p>Personnummer * </p>
-				<input type="text" value="" name="buyer[pnumber]" class="inputfield">
+				<input type="text" value="" name="buyer[pnumber]" class="inputfield" placeholder="ÅÅMMDDXXXX">
 			</div>
 
 			<div class="iteminput">
 				<p>E-post * </p>
-				<input type="text" value="" name="buyer[email]" class="inputfield">
+				<input type="email" value="" name="buyer[email]" class="inputfield">
 			</div>
 		</div>
 		<div class="iteminputcontainer">
 			<div class="iteminput">
 				<p>Adress * </p>
-				<input type="text" value="" name="buyer[adress]" class="inputfield">
+				<input type="text" value="" name="buyer[address]" class="inputfield">
 			</div>
 			<div class="iteminput">
 				<p>Postnummer * </p>
