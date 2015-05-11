@@ -1,11 +1,10 @@
 <?php
 
 class model_klarna
-{
-	
-	public function fetchPclasses(){
-		$k = $GLOBALS['klarna'];
-		$k->config(
+{	
+	function __construct(){	
+		//Configure the klarna obj
+		$GLOBALS['klarna']->config(
 		    3950,                    // Merchant ID
 		    'eTtv64VfxLIsum8',       // Shared secret
 		    KlarnaCountry::SE,    // Purchase country
@@ -15,22 +14,15 @@ class model_klarna
 		    'json',               // PClass storage
 		    './pclasses.json'     // PClass storage URI path
 		);
-
+	}
+	
+	public function fetchPclasses(){
+		$k = $GLOBALS['klarna'];
 		$k->getCheapestPClass(19990, KlarnaFlags::CHECKOUT_PAGE);
 	}
 	
 	public function makeReservation($article, $shipping, $buyer){
 		$k = $GLOBALS['klarna'];
-		$k->config(
-		    3950,                    // Merchant ID
-		    'eTtv64VfxLIsum8',       // Shared secret
-		    KlarnaCountry::SE,    // Purchase country
-		    KlarnaLanguage::SV,   // Purchase language
-		    KlarnaCurrency::SEK,  // Purchase currency
-		    Klarna::BETA,         // Server
-		    'json',               // PClass storage
-		    './pclasses.json'     // PClass storage URI path
-		);
 		
 		foreach($article as $row){
 			$k->addArticle($row[0], $row[1], $row[2], $row[3], $row[4], $row[5], $row[6]);			
@@ -63,20 +55,8 @@ class model_klarna
 		}
 	}
 	
-	public function cancleReservation($data){
+	public function cancleReservation($rno){
 		$k = $GLOBALS['klarna'];
-		$k->config(
-		    3950,                    // Merchant ID
-		    'eTtv64VfxLIsum8',       // Shared secret
-		    KlarnaCountry::SE,    // Purchase country
-		    KlarnaLanguage::SV,   // Purchase language
-		    KlarnaCurrency::SEK,  // Purchase currency
-		    Klarna::BETA,         // Server
-		    'json',               // PClass storage
-		    './pclasses.json'     // PClass storage URI path
-		);
-		
-		$rno = $data;
 
 		try {
 		    $k->cancelReservation($rno);
@@ -87,21 +67,9 @@ class model_klarna
 		}
 	}
 	
-	public function activateReservation($data){
+	public function activateReservation($rno){
 		$k = $GLOBALS['klarna'];
-		$k->config(
-		    3950,                    // Merchant ID
-		    'eTtv64VfxLIsum8',       // Shared secret
-		    KlarnaCountry::SE,    // Purchase country
-		    KlarnaLanguage::SV,   // Purchase language
-		    KlarnaCurrency::SEK,  // Purchase currency
-		    Klarna::BETA,         // Server
-		    'json',               // PClass storage
-		    './pclasses.json'     // PClass storage URI path
-		);
 		
-		$rno = $data;
-
 		try {
 		    $result = $k->activate($rno, null, KlarnaFlags::RSRV_SEND_BY_EMAIL);
 		

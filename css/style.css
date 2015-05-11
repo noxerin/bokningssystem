@@ -83,7 +83,7 @@ a, a:hover{
 	color: #fff;
 	border-radius: 5px;
 	padding: 20px;
-	position: absolute;
+	position: relative;
 	z-index: 999;
 }
 .warning{

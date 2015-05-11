@@ -21,7 +21,7 @@
 						<select class="count">';
 						for($i = 1; $i <= 12; $i ++){
 							if($_SESSION['count'] == $i){
-								echo "<option selected value='$i'>$i</option>";
+								echo "<option selected='selected' value='$i'>$i</option>";
 							}else{
 								echo "<option value='$i'>$i</option>";
 							}
@@ -77,6 +77,11 @@
 }
 </style>
 <script>
+	$(document).ready(function(){
+		var id = $(".count").val();
+		$("#count").val(id);
+	});
+	
 	$(".item select").on("change", function(){
 		var id = $(this).val();
 		$("#count").val(id);

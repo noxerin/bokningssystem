@@ -53,4 +53,9 @@ class Checkout extends Controller
 		//Change paymentstatus from VERIFYING to PAID
 	}
 	
+	public function cancel($data){
+		$klarna = $this->model('model_klarna');
+		$klarna->cancleReservation($data);
+	}
+	
 }

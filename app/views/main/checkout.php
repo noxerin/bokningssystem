@@ -80,7 +80,17 @@
 				<input type="text" value="" name="buyer[phone]" class="inputfield">
 			</div>
 		</div>
-		
+		<div class="iteminputcontainer">
+			<div class="iteminput">
+				<p>Företagsnamn </p>
+				<input type="text" value="" name="buyer[company]" class="inputfield">
+			</div>
+			<div class="iteminput">
+				<p>Företagsnummer </p>
+				<input type="text" value="" name="buyer[companyid]" class="inputfield">
+			</div>
+
+		</div>
 	</div>
 	<div class="dottedborder"></div>
 	<div class=""></div>
