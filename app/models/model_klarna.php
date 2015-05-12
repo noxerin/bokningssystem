@@ -16,9 +16,14 @@ class model_klarna
 		);
 	}
 	
+	public function getAdress($pnum){
+		$k = $GLOBALS['klarna'];
+		return $k->getAddresses($pnum);
+	}
+	
 	public function fetchPclasses(){
 		$k = $GLOBALS['klarna'];
-		$k->getCheapestPClass(19990, KlarnaFlags::CHECKOUT_PAGE);
+		return $k->getCheapestPClass(1975, KlarnaFlags::CHECKOUT_PAGE);
 	}
 	
 	public function makeReservation($article, $shipping, $buyer){

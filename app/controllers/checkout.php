@@ -4,7 +4,7 @@ class Checkout extends Controller
 {
 	public function index(){
 		if(!isset($_SESSION['accepted'])){
-			header("Location: /preview");
+			header("Location: /");
 			$this->nxi_error('Du har inte accepterad designen och dina val. Detta kan bero på att du råkat hoppa över något val!', "Var god och försök igen, alla dina val ska vara sparade!");
 			die;
 		}
@@ -14,6 +14,11 @@ class Checkout extends Controller
 		$this->view('main/checkout');
 		$this->view('main/partials/footer');
 
+	}
+	
+	public function get(){
+		$klarna = $this->model('model_klarna');
+		var_dump($klarna->fetchPclasses());
 	}
 	
 	public function pay(){
