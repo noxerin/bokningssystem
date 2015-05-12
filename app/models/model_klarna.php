@@ -16,14 +16,15 @@ class model_klarna
 		);
 	}
 	
+	
+	public function getCheapest($value){
+		$k = $GLOBALS['klarna'];
+		return $k->getCheapestPClass($value, KlarnaFlags::CHECKOUT_PAGE);
+	}
+	
 	public function getAdress($pnum){
 		$k = $GLOBALS['klarna'];
 		return $k->getAddresses($pnum);
-	}
-	
-	public function fetchPclasses(){
-		$k = $GLOBALS['klarna'];
-		return $k->getCheapestPClass(1975, KlarnaFlags::CHECKOUT_PAGE);
 	}
 	
 	public function makeReservation($article, $shipping, $buyer){
@@ -46,7 +47,7 @@ class model_klarna
 		        null, // KlarnaFlags::MALE, KlarnaFlags::FEMALE (AT/DE/NL only)
 		        -1,   // Automatically calculate and reserve the cart total amount
 		        KlarnaFlags::NO_FLAG,
-		        KlarnaPClass::INVOICE
+		        KlarnaPClass::INVOICE //Type of invoice 24mån / direkt
 		    );
 		
 		    $rno = $result[0];

@@ -9,9 +9,8 @@
 		<link rel="stylesheet" href="/css/nivo-slider.css" type="text/css" />
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
 		<script src="/assets/jquery.nivo.slider.pack.js" type="text/javascript"></script>
-		<script src="//<?=$GLOBALS['baseurl'];?>/assets/jquery.timeago.js" type="text/javascript"></script>
 		<link href='http://fonts.googleapis.com/css?family=Raleway' rel='stylesheet' type='text/css'>
-		<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+		<link rel='stylesheet' href="/assets/fonts/font-awesome.min.css">
 	</head>
 	<body>
 	<div class="page">

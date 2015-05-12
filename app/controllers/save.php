@@ -47,4 +47,23 @@ class Save extends Controller
 		header("Location: /checkout");
 	}
 	
+	public function customer(){
+		if(strlen($_POST['buyer']['fname']) > 1 &&
+		   strlen($_POST['buyer']['lname']) > 1 &&
+		   strlen($_POST['buyer']['pnumber']) == 10 &&
+		   strpos($_POST['buyer']['email'], "@") &&
+		   strpos($_POST['buyer']['email'], ".") &&
+		   strlen($_POST['buyer']['address']) > 2 &&
+		   strlen($_POST['buyer']['postal']) == 5 &&
+		   in_array($_POST['buyer']['country'], array("SE", "DK", "NO")) &&
+		   strlen($_POST['buyer']['phone']) > 4 &&
+		   in_array($_POST['buyer']['alternative'], array('1', '2', '3'))){
+			$_SESSION['buyer'] = $_POST['buyer'];
+			header('Location: /checkout/review');
+		}else{
+			$this->nxi_error('Fel på något fält kontrollera igen!', '');
+			header("Location: /checkout");
+		}
+	}
+	
 }

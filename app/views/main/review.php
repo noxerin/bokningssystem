@@ -5,28 +5,28 @@
 <div class="itemcontainer">
 	<div class="item" data-id="1">
 		<img src="/assets/images/badkar.jpg">
-		<i class="fa fa-3x <?php if($_SESSION['buyer']['alternative'] == '1' || !isset($_SESSION['buyer']['alternative'])){echo'fa-check selected';}else{echo 'fa-circle-o';}?>"></i>
+		<i class="fa fa-check fa-3x selected"></i>
 		<h1>Brev</h1>
 		<p><b>Ditt presentkort skickas via posten!</b></p>
 		<p>+25 kr</p>
 	</div>
 	<div class="item" data-id="2">
 		<img src="/assets/images/rum.jpg">
-		<i class="fa fa-3x <?php if($_SESSION['buyer']['alternative'] == '2'){echo'fa-check selected';}else{echo 'fa-circle-o';}?>"></i>
+		<i class="fa fa-circle-o fa-3x"></i>
 		<h1>Special</h1>
 		<p><b>Ditt presentkort skickas via posten! Men med en liten bit extra lyx!</b></p>
 		<p>+80 kr</p>
 	</div>
 	<div class="item" style="margin: 0 auto; float: none;" data-id="3">
 		<img src="/assets/images/brasa.jpg">
-		<i class="fa fa-3x <?php if($_SESSION['buyer']['alternative'] == '3'){echo'fa-check selected';}else{echo 'fa-circle-o';}?>"></i>
+		<i class="fa fa-circle-o fa-3x"></i>
 		<h1>Nerladdning</h1>
 		<p><b>Du laddar ner presentkortet direkt efter betalningen!</b></p>
 	</div>
 </div>
 <div class="dottedborder"></div>
 <form action="/save/customer" method="post">
-	<input type="hidden" value="1" name="buyer[alternative]" id="alternative">
+	<input type="hidden" value="" name="alternative" id="alternative">
 	<div class="itemcontainer">
 		<h1 style="font-size: 22px; text-align: center;">Kontaktuppgifter! Alla fält med * måste vara ifyllda</h1>
 		<div class="iteminputcontainer">

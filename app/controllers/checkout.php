@@ -13,12 +13,19 @@ class Checkout extends Controller
 		$this->view('main/partials/header', "The Lodge - Presentkort");
 		$this->view('main/checkout');
 		$this->view('main/partials/footer');
-
 	}
 	
-	public function get(){
-		$klarna = $this->model('model_klarna');
-		var_dump($klarna->fetchPclasses());
+	public function review(){
+		if(!isset($_SESSION['buyer'])){
+			header("Location: /");
+			$this->nxi_error('Du har inte accepterad designen och dina val. Detta kan bero på att du råkat hoppa över något val!', "Var god och försök igen, alla dina val ska vara sparade!");
+			die;
+		}
+		//Model import
+		
+		$this->view('main/partials/header', "The Lodge - Presentkort");
+		$this->view('main/review');
+		$this->view('main/partials/footer');
 	}
 	
 	public function pay(){
