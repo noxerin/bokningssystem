@@ -41,11 +41,6 @@
 		</div>
 		<div class="iteminputcontainer">
 			<div class="iteminput">
-				<p>Personnummer * </p>
-				<input type="text" value="<?=$_SESSION['buyer']['pnumber']?>" name="buyer[pnumber]" class="inputfield" placeholder="ÅÅMMDDXXXX">
-			</div>
-
-			<div class="iteminput">
 				<p>E-post * </p>
 				<input type="email" value="<?=$_SESSION['buyer']['email']?>" name="buyer[email]" class="inputfield">
 			</div>

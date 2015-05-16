@@ -1,6 +1,6 @@
 <?php
 	
-error_reporting(-1);
+error_reporting(-0);
 ini_set('display_errors', 'On');
 	
 
@@ -11,6 +11,8 @@ global $baseurl;
 $baseurl = $_SERVER['SERVER_NAME'];	
 
 require_once "core/Config.php";
+global $config;
+$config = $configArr;
 
 require_once "lib/Database.php";
 $db = new NXI\Database($config);
@@ -25,3 +27,4 @@ $klarna = new Klarna();
 
 require_once "core/App.php";
 require_once "core/Controller.php";
+require_once "core/Controller_Admin.php";

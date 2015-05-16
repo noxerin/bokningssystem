@@ -4,26 +4,33 @@ class Save extends Controller
 {
 	
 	public function image(){
-		$headTo = "/products";
-		$_SESSION['image'] = $_POST['image'];
+		$image = $this->model('model_images');
+		if($image->getImage($_POST['image'])){
+			$_SESSION['image'] = $_POST['image'];	
+			$headTo = "/products";
+		}else{
+			$this->nxi_error("Bilden du försökt välja finns inte!", "Försök igen!");
+			$headTo = "/";
+		}
 		$_SESSION['message'] = $_POST['message'];
 		header("Location: $headTo");
 	}
 
 	public function category(){
-		if($_POST['product'] <= 0){
-			$headTo = "/products";
-			$this->nxi_error('Du har inte valt någon upplevelse!', '');
-		}else{
+		$product = $this->model('model_product');
+		if($product->getProduct($_POST['product'])){
 			$headTo = "/productssecond";
 			$_SESSION['product'] = $_POST['product'];
+		}else{
+			$headTo = "/products";
+			$this->nxi_error('Kategorin du försökte välja finns inte!', 'Var god försök igen!');
 		}
 		header("Location: $headTo");
 	}	
 	
 	public function categorieschoice(){
-		$headTo = "/extras";
-		if($_POST['count'] > 0 && $_POST['count'] <= 12){
+		if($_POST['count'] > 0 && $_POST['count'] <= 12){	
+			$headTo = "/extras";
 			$_SESSION['count'] = $_POST['count'];	
 		}else{		
 			$headTo = "/productssecond";
@@ -34,7 +41,7 @@ class Save extends Controller
 	
 	public function extras(){
 		$headTo = "/preview";
-		if(isset($_POST['extras']) && strlen($_POST['extras'][0]) >= 1){
+		if(isset($_POST['extras']) && strlen($_POST['extras']) >= 1){
 			$_SESSION['extras'] = explode(",", $_POST['extras']);
 		}else{
 			$_SESSION['extras'] = "";
@@ -50,11 +57,11 @@ class Save extends Controller
 	public function customer(){
 		if(strlen($_POST['buyer']['fname']) > 1 &&
 		   strlen($_POST['buyer']['lname']) > 1 &&
-		   strlen($_POST['buyer']['pnumber']) == 10 &&
 		   strpos($_POST['buyer']['email'], "@") &&
 		   strpos($_POST['buyer']['email'], ".") &&
 		   strlen($_POST['buyer']['address']) > 2 &&
 		   strlen($_POST['buyer']['postal']) == 5 &&
+		   strlen($_POST['buyer']['city']) > 1 &&
 		   in_array($_POST['buyer']['country'], array("SE", "DK", "NO")) &&
 		   strlen($_POST['buyer']['phone']) > 4 &&
 		   in_array($_POST['buyer']['alternative'], array('1', '2', '3'))){

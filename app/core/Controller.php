@@ -8,6 +8,10 @@ class Controller
 	*
 	*/
 	public function __construct(){
+		$this->showError();
+	}
+	
+	public function showError(){
 		if(isset($_SESSION['error'])){
 			$this->view('main/partials/error', $_SESSION['error']);
 			unset($_SESSION['error']);

@@ -1,4 +1,4 @@
-<div class="col-md-5 col-md-offset-3 error">
+<div class="error">
 	<i class="fa fa-remove error-remove"></i>
 	<h2>Felmedelande</h2>
 	<br>

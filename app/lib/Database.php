@@ -86,6 +86,13 @@
 				}
 			}
 			
+			//Clean all parameters from malicious code
+			$tmp = array();
+			foreach($params as $row){
+				array_push($tmp, $this->xss_clean($row));
+			}
+			$params = $tmp;
+			
 			//Execute query and send in array
 			$query->execute($params);
 			

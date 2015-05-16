@@ -16,79 +16,190 @@ class model_klarna
 		);
 	}
 	
-	
-	public function getCheapest($value){
-		$k = $GLOBALS['klarna'];
-		return $k->getCheapestPClass($value, KlarnaFlags::CHECKOUT_PAGE);
-	}
-	
-	public function getAdress($pnum){
-		$k = $GLOBALS['klarna'];
-		return $k->getAddresses($pnum);
-	}
-	
-	public function makeReservation($article, $shipping, $buyer){
-		$k = $GLOBALS['klarna'];
+	public function checkout($data){
 		
-		foreach($article as $row){
-			$k->addArticle($row[0], $row[1], $row[2], $row[3], $row[4], $row[5], $row[6]);			
+		//Create array and input product
+		$cart = array(
+		    array(
+		        'reference' => $data['product']['id'],
+		        'name' => 'Presentkort - ' . $data['product']['name'],
+		        'quantity' => (int)$_SESSION['count'],
+		        'unit_price' => $data['product']['price']*100,
+		        'discount_rate' => 00,
+		        'tax_rate' => 2500
+		    )
+		);
+		
+		//Add extras if selected
+		foreach($data['extras'] as $row){
+			array_push($cart,
+			    array(
+			        'reference' => $row['id'],
+			        'name' => 'Extra - ' . $row['name'],
+			        'quantity' => 1,
+			        'unit_price' => $row['price']*100,
+			        'tax_rate' => 2500
+				)
+			);
 		}
+		
+		
+		//Add shipping to cart
+		array_push($cart,
+			    array(
+			        'type' => 'shipping_fee',
+			        'reference' => 'FRAKT',
+			        'name' => 'Frakt - ' . $data['shipping']['title'],
+			        'quantity' => 1,
+			        'unit_price' => $data['shipping']['cost']*100,
+			        'tax_rate' => 2500
+				)
+		);
+		
+		$create = array();
+		foreach ($cart as $item) {
+		    $create['cart']['items'][] = $item;
+		}
+		
+		$create['shipping_address']['email'] = $_SESSION['buyer']['email'];
+		$create['shipping_address']['postal_code'] = $_SESSION['buyer']['postal'];
+		$create['shipping_address']['given_name'] = $_SESSION['buyer']['fname'];
+		$create['shipping_address']['family_name'] = $_SESSION['buyer']['lname'];
+		$create['shipping_address']['street_address'] = $_SESSION['buyer']['address'];
+		$create['shipping_address']['postal_code'] = $_SESSION['buyer']['postal'];
+		$create['shipping_address']['city'] = $_SESSION['buyer']['city'];
 
-		$k->addArticle(1, "", "Frakt", $shipping, 25, 0, KlarnaFlags::INC_VAT | KlarnaFlags::IS_SHIPMENT);
-		
-		$addr = new KlarnaAddr($buyer[0], $buyer[1], $buyer[2], $buyer[3], $buyer[4], $buyer[5], $buyer[6], $buyer[7], $buyer[8], $buyer[9], $buyer[10], $buyer[11]);
-		
-		$k->setAddress(KlarnaFlags::IS_BILLING, $addr);
-		$k->setAddress(KlarnaFlags::IS_SHIPPING, $addr);
-		
-		try {
-		    $result = $k->reserveAmount(
-		        $buyer[12], // PNO (Date of birth for AT/DE/NL)
-		        null, // KlarnaFlags::MALE, KlarnaFlags::FEMALE (AT/DE/NL only)
-		        -1,   // Automatically calculate and reserve the cart total amount
-		        KlarnaFlags::NO_FLAG,
-		        KlarnaPClass::INVOICE //Type of invoice 24mån / direkt
-		    );
-		
-		    $rno = $result[0];
-		    $status = $result[1];
-		
-		    // $status is KlarnaFlags::PENDING or KlarnaFlags::ACCEPTED.
-		
-		    return array($rno, $status);
-		} catch(Exception $e) {
-		    return array(false, $e->getCode(), $e->getMessage()); 
-		}
-	}
-	
-	public function cancleReservation($rno){
-		$k = $GLOBALS['klarna'];
 
-		try {
-		    $k->cancelReservation($rno);
 		
-		    echo "OK\n";
-		} catch(Exception $e) {
-		    echo "{$e->getMessage()} (#{$e->getCode()})\n";
-		}
+		$create['purchase_country'] = 'SE';
+		$create['purchase_currency'] = 'SEK';
+		$create['locale'] = 'sv-se';
+		$create['merchant']['id'] = $GLOBALS['config']['klarna']['eid'];
+		$create['merchant']['terms_uri'] = 'http://'. $_SERVER['SERVER_NAME'] . '/checkout/terms';
+		$create['merchant']['checkout_uri'] = 'http://'. $_SERVER['SERVER_NAME'] . '/checkout/review';
+		$create['merchant']['confirmation_uri'] = 'http://'. $_SERVER['SERVER_NAME'] . '/checkout/complete' . '/?klarna_id={checkout.order.uri}';
+		$create['merchant']['push_uri'] = 'http://'. $_SERVER['SERVER_NAME'] . '/checkout/confirm' . '/?klarna_order={checkout.order.uri}';
+		    
+	    $create['options']['color_button'] = '#61614C';
+		    
+		Klarna_Checkout_Order::$baseUri
+		    = 'https://checkout.testdrive.klarna.com/checkout/orders';
+		Klarna_Checkout_Order::$contentType
+		    = "application/vnd.klarna.checkout.aggregated-order-v2+json";
+		
+		$connector = Klarna_Checkout_Connector::create($GLOBALS['config']['klarna']['sharedSecret']);
+		$order = new Klarna_Checkout_Order($connector);
+		$order->create($create);
+		
+		$order->fetch();
+
+		// Store location of checkout session
+		$_SESSION['klarna_checkout'] = $sessionId = $order->getLocation();
+		
+		// Display checkout
+		$snippet = $order['gui']['snippet'];
+		return "<div>{$snippet}</div>";
 	}
 	
-	public function activateReservation($rno){
-		$k = $GLOBALS['klarna'];
+	public function complete($orderid){
+		Klarna_Checkout_Order::$contentType
+		    = "application/vnd.klarna.checkout.aggregated-order-v2+json";
 		
-		try {
-		    $result = $k->activate($rno, null, KlarnaFlags::RSRV_SEND_BY_EMAIL);
+		$connector = Klarna_Checkout_Connector::create('eTtv64VfxLIsum8');
 		
-		    // For optional arguments, flags, partial activations and so on, refer to the documentation.
-		    // See Klarna::setActivateInfo
+		@$checkoutId = $orderid;
+		$order = new Klarna_Checkout_Order($connector, $checkoutId);
+		$order->fetch();
 		
-		    $risk = $result[0];  // "ok" or "no_risk"
-		    $invNo = $result[1]; // "9876451"
-		
-		    echo "OK: invoice number {$invNo} - risk status {$risk}\n";
-		} catch(Exception $e) {
-		    echo "{$e->getMessage()} (#{$e->getCode()})\n";
+		//If not already created, Create order in our system
+		$sql = "SELECT * FROM orders WHERE klarna = ?";
+		if(!is_array($GLOBALS['db']->query($sql, $order['reservation']))){
+			$sql = "
+					INSERT INTO 
+						orders 
+						(fname, lname, email, address, postal, country, phone, shipping_alternative, image, message, code, klarna, time) 
+					VALUES 
+						(?,?,?,?,?,?,?,?,?,?,?,?,?);
+					SELECT LAST_INSERT_ID()";
+			$GLOBALS['db']->query($sql, 
+								array($_SESSION['buyer']['fname'],
+									$_SESSION['buyer']['lname'],
+									$_SESSION['buyer']['email'],
+									$_SESSION['buyer']['address'],
+									$_SESSION['buyer']['postal'],
+									$_SESSION['buyer']['country'],
+									$_SESSION['buyer']['phone'],
+									$_SESSION['buyer']['alternative'],
+									$_SESSION['image'],
+									$_SESSION['message'],
+									substr(hash('sha512', $order['reservation'] . rand(1, 1000)), 1, 12),
+									$order['reservation'],
+									time()));
+			//Create relation table for products and extras in order
+			//Select id from order
+			$sql = "SELECT 
+						id
+					FROM
+						orders
+					WHERE
+						klarna = ?";
+			$id = $GLOBALS['db']->query($sql, $order['reservation']);
+			//Fist insert product
+			$sql = "INSERT INTO 
+						order_items
+						(`order`, item_id, category, count) 
+					VALUES 
+						(?,?,?,?)";
+			$GLOBALS['db']->query($sql, array($id[0]['id'], $_SESSION['product'], "PRODUCT", $_SESSION['count']));
+			
+			//Insert every extras
+			if(strlen($_SESSION['extras'][0]) >= 1){
+				foreach($_SESSION['extras'] as $row){
+					$sql = "
+						INSERT INTO 
+							order_items
+							(`order`, item_id, category, count) 
+						VALUES 
+							(?,?,?,1)";
+					$GLOBALS['db']->query($sql, array($id[0]['id'], $row, "EXTRAS"));
+				}
+			}
 		}
+		
+		$snippet = $order['gui']['snippet'];
+		unset($_SESSION['klarna_checkout']);
+		return "<div>{$snippet}</div>";
 	}
 	
+	public function confirm($orderid){
+		Klarna_Checkout_Order::$contentType
+		    = "application/vnd.klarna.checkout.aggregated-order-v2+json";
+		
+		$connector = Klarna_Checkout_Connector::create('eTtv64VfxLIsum8');
+		
+		@$checkoutId = $orderid;
+		$order = new Klarna_Checkout_Order($connector, $checkoutId);
+		$order->fetch();
+		
+		if ($order['status'] == "checkout_complete") {
+		    // At this point make sure the order is created in your system and send a 
+		    // confirmation email to the customer
+		    
+		    //Update order in our system
+			$sql = "
+				UPDATE
+					orders
+				SET
+					status = 'RESERVED'
+				WHERE
+					klarna = ?";
+			$GLOBALS['db']->query($sql, $order['reservation']);			
+
+		    $update = array();
+		    $update['status'] = 'created';
+		
+		    $order->update($update);
+		}
+		
+	}
 }

@@ -2,6 +2,7 @@
 
 class App 
 {
+	protected $app = "main";
 	
 	protected $controller = 'main';
 	
@@ -13,7 +14,16 @@ class App
 	{
 		$url = $this->parseUrl();
 		
-		if(file_exists('app/controllers/' . $url[0] . '.php'))
+		if(is_dir('app/controllers/' . $url[0] . '/') && strlen($url[0]) >= 1)
+		{
+			$this->app = $url[0];
+			unset($url[0]);
+			$url = array_values($url);
+		}else{
+			//echo "No controller found going default";
+		}
+				
+		if(file_exists('app/controllers/'. $this->app . "/" . $url[0] . '.php'))
 		{
 			$this->controller = $url[0];
 			unset($url[0]);
@@ -22,7 +32,7 @@ class App
 			//echo "No controller found going default";
 		}
 		
-		require_once 'app/controllers/' . $this->controller . '.php';
+		require_once 'app/controllers/' . $this->app . "/" . $this->controller . '.php';
 
 		/** **************** ***************** **/
 		
