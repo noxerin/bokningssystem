@@ -16,7 +16,7 @@ class Main extends Controller
 	public function products(){
 		$product = $this->model('model_product');
 		
-		$products = $product->getAll();
+		$products = $product->getAllActive();
 		
 		$this->view('main/partials/header', "The Lodge - Presentkort");
 		$this->view('main/products', $products);

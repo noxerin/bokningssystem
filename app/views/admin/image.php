@@ -4,7 +4,7 @@
 			<h3 class="control-header">Ladda upp en bild</h3>
 			<form method="post" action="/admin/image/add" enctype="multipart/form-data">
 				<input class="" type="file" name="image" style="margin-top: 30px;" required>
-				<input type="submit" class="btn" style="margin-top: 30px;">
+				<input type="submit" class="btn" value="Ladda upp" style="margin-top: 30px;">
 			</form>
 		</div>
 		<div class="col-md-6">

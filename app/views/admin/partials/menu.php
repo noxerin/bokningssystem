@@ -9,8 +9,13 @@
 				BILDER
 			</div>
 		</a>
+		<a href="/admin/product/">
+			<div class="options-header">
+				KATEGORIER
+			</div>
+		</a>
 		
-		<div class="options-item">
+		<!--<div class="options-item">
 			BILDER
 			<i class="fa fa-sort-desc" style="bottom: 3px; position: relative; color: #fff;"></i>
 			<div class="options-item-dropdown">
@@ -25,7 +30,7 @@
 					</div>
 				</a>
 			</div>
-		</div>
+		</div>-->
 	</div>
 </div>
 <div class="head-bar">
