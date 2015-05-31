@@ -8,7 +8,7 @@
 		<h2>Kategorihantering</h2>
 		<p>Här kan du lägga till, ta bort eller ändra kategorier!</p>
 		<p>För att uppdatera en redan skapad kategori klicka <i class="fa fa-pencil fa-2x" style="color: #f1c40f"></i></p>
-		<p>För att ta bort en kategori klicka på <i class="fa fa-times fa-2x" style="color: #e74c3c"></i></p>
+		<p>För att ta bort en kategori klicka på <i class="fa fa-times fa-2x" style="color: #e74c3c"></i> kategorien tas aldrig bort helt eftersom presentkort på vald produkt redan kan ha blivit utfärdade. Därav ligger kategorin kvar i systemet för att kunna avgöra vad kunden beställt!</p>
 	</div>
 	</div>
 </div>
