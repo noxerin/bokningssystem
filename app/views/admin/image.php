@@ -8,11 +8,11 @@
 			</form>
 		</div>
 		<div class="col-md-6">
-		<h2>Bildhantering</h2>
-		<p>Här kan du lägga till eller ta bort bilder i användning för presentkort!</p>
-		<p>För att ta bort en bild klicka på <i class="fa fa-times fa-2x" style="color: #e74c3c"></i> som är på den bilden</p>
-		<p>När en bild har tagits bort så går det inte att ändra på. Bilden måste då laddas upp igen!</p>
-	</div>
+			<h2>Bildhantering</h2>
+			<p>Här kan du lägga till eller ta bort bilder i användning för presentkort!</p>
+			<p>För att ta bort en bild klicka på <i class="fa fa-times fa-2x" style="color: #e74c3c"></i> som är på den bilden</p>
+			<p>När en bild har tagits bort så går det inte att ändra på. Bilden måste då laddas upp igen!</p>
+		</div>
 	</div>
 </div>
 

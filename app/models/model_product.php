@@ -43,4 +43,29 @@ class model_product
 		return $GLOBALS['db']->query($sql, $id);
 	}
 	
+	public function updateimage($id, $fileid){
+		$sql = "
+			UPDATE
+				products
+			SET
+				image = ?
+			WHERE
+				id = ?";
+		return $GLOBALS['db']->query($sql, array($fileid, $id));
+	}
+	
+	public function updateinfo($id, $name, $desc, $price, $type){
+		$sql = "
+			UPDATE
+				products
+			SET
+				name = ?,
+				products.desc = ?,
+				price = ?,
+				type = ?
+			WHERE
+				id = ?";
+		return $GLOBALS['db']->query($sql, array($name, $desc, $price, $type, $id));
+	}
+	
 }
