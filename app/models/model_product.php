@@ -68,4 +68,14 @@ class model_product
 		return $GLOBALS['db']->query($sql, array($name, $desc, $price, $type, $id));
 	}
 	
+	public function create($name, $image, $desc, $price, $type){
+		$sql = "
+			INSERT INTO
+				products
+				(name,image,products.desc,price,type,active)
+			VALUES
+				(?,?,?,?,?,1)";
+		return $GLOBALS['db']->query($sql, array($name, $image, $desc, $price, $type));
+	}
+	
 }

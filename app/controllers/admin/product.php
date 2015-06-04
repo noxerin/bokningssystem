@@ -38,6 +38,43 @@ class Product extends Controller_Admin
 	
 	//Call functions
 	
+	public function addnew(){
+		$productmodel = $this->model("model_product");
+		
+		$name = $_POST['product']['name'];
+		$desc = $_POST['product']['desc'];
+		$price = $_POST['product']['price'];
+		$type = $_POST['product']['type'];
+				
+		if(strlen($name) > 3 &&
+		   strlen($desc) > 3 &&
+		   strlen($price) > 0 &&
+		   ($type == "person" || $type == "fixed")){
+		   
+		   //Move image			
+		   $imageFileType = pathinfo($_FILES["image"]["name"],PATHINFO_EXTENSION);
+	
+		   $target_dir = "assets/images/";
+		   $target_file = substr(hash('sha512', basename($_FILES["image"]["name"] . rand(1, 1000))), 0, 10);
+	
+		   if($imageFileType != "jpg" && $imageFileType != "png" && $imageFileType != "jpeg" && $imageFileType != "gif" ) {
+		   		$this->nxi_error("Bilden har inte ett stött format!", "Testa med jpg,png,jpeg,gif");
+			}else{
+				if(move_uploaded_file($_FILES["image"]["tmp_name"], $target_dir.$target_file.".".$imageFileType)){
+					if($productmodel->create($name,$target_file.".".$imageFileType,$desc,$price,$type)){
+						$this->nxi_warning('Kategori tillagd', '');
+				    }
+				}else{
+					$this->nxi_error("Fel uppstod vi flytt av bild från temporära platsen!", "");		
+				}
+			}
+
+		}else{
+			$this->nxi_error('Ett eller flera fält saknar text', 'kontrollera all text en gång till');
+		}
+		header("Location: /admin/product/");
+	}
+	
 	public function update(){
 		$productmodel = $this->model("model_product");
 		
