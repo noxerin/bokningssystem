@@ -4,16 +4,28 @@
 				HEM
 			</div>
 		</a>
-		<a href="/admin/image/">
-			<div class="options-header">
-				BILDER
+		
+		<div class="options-item">
+			HANTERA
+			<i class="fa fa-sort-desc" style="bottom: 3px; position: relative; color: #fff;"></i>
+			<div class="options-item-dropdown">
+				<a href="/admin/product">
+					<div class="options-item-dropdown-item">
+						Kategorier
+					</div>
+				</a>
+				<a href="/admin/extras/">
+					<div class="options-item-dropdown-item">
+						Tillägg
+					</div>
+				</a>
+				<a href="/admin/image/">
+					<div class="options-item-dropdown-item">
+						Bilder
+					</div>
+				</a>
 			</div>
-		</a>
-		<a href="/admin/product/">
-			<div class="options-header">
-				KATEGORIER
-			</div>
-		</a>
+		</div>
 		
 		<!--<div class="options-item">
 			BILDER
