@@ -13,17 +13,32 @@
 			</ul>
 		</div>
 		<?php
-			$totalsum = $data[1]['product']['price']*$_SESSION['count'];
-			echo '
-				<div class="product">
-					<ul>
-						<li class="li1"><p>Presentkort - ' . $data[1]['product']['name'] . '</p></li>
-						<li class="li2"><p>' . $_SESSION['count'] . '</p></li>
-						<li class="li3"><p>' . $data[1]['product']['price'] . ' :-</p></li>
-						<li class="li4"><p>' . $data[1]['product']['price']*$_SESSION['count'] . ' :-</p></li>
-					</ul>
-					<div class="product-seperator"></div>
-				</div>';
+
+			if($_SESSION['count'] == "sum"){
+				$totalsum = $_SESSION['sum'];
+				echo '
+					<div class="product">
+						<ul>
+							<li class="li1"><p>Presentkort - ' . $data[1]['product']['name'] . '</p></li>
+							<li class="li2"><p>1</p></li>
+							<li class="li3"><p>' . $_SESSION['sum'] . ' :-</p></li>
+							<li class="li4"><p>' . $_SESSION['sum'] . ' :-</p></li>
+						</ul>
+						<div class="product-seperator"></div>
+					</div>';
+			}else{
+				$totalsum = $data[1]['product']['price']*$_SESSION['count'];
+				echo '
+					<div class="product">
+						<ul>
+							<li class="li1"><p>Presentkort - ' . $data[1]['product']['name'] . '</p></li>
+							<li class="li2"><p>' . $_SESSION['count'] . '</p></li>
+							<li class="li3"><p>' . $data[1]['product']['price'] . ' :-</p></li>
+							<li class="li4"><p>' . $data[1]['product']['price']*$_SESSION['count'] . ' :-</p></li>
+						</ul>
+						<div class="product-seperator"></div>
+					</div>';
+			}
 			if(strlen($_SESSION['extras'][0]) > 0){
 				foreach($data[1]['extras'] as $row){
 					$totalsum += $row['price'];

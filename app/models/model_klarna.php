@@ -18,12 +18,19 @@ class model_klarna
 	
 	public function checkout($data){
 		
+		//If value sum
+		if($_SESSION['count'] == "sum"){
+			$productCount = 1;
+		}else{
+			$productCount =	(int)$_SESSION['count'];
+		}
+		
 		//Create array and input product
 		$cart = array(
 		    array(
 		        'reference' => $data['product']['id'],
 		        'name' => 'Presentkort - ' . $data['product']['name'],
-		        'quantity' => (int)$_SESSION['count'],
+		        'quantity' => $productCount,
 		        'unit_price' => $data['product']['price']*100,
 		        'discount_rate' => 00,
 		        'tax_rate' => 2500
@@ -145,12 +152,21 @@ class model_klarna
 						klarna = ?";
 			$id = $GLOBALS['db']->query($sql, $order['reservation']);
 			//Fist insert product
+			//If value sum count = amount && category = sum
+			if($_SESSION['count'] == "sum"){
+				$count = $_SESSION['sum'];
+				$category = "SUM";
+			}else{
+				$count = $_SESSION['count'];
+				$category = "PRODUCT";
+			}
+			//Initiate insert
 			$sql = "INSERT INTO 
 						order_items
 						(`order`, item_id, category, count) 
 					VALUES 
 						(?,?,?,?)";
-			$GLOBALS['db']->query($sql, array($id[0]['id'], $_SESSION['product'], "PRODUCT", $_SESSION['count']));
+			$GLOBALS['db']->query($sql, array($id[0]['id'], $_SESSION['product'], $category, $count));
 			
 			//Insert every extras
 			if(strlen($_SESSION['extras'][0]) >= 1){
@@ -164,6 +180,7 @@ class model_klarna
 					$GLOBALS['db']->query($sql, array($id[0]['id'], $row, "EXTRAS"));
 				}
 			}
+			session_destroy();
 		}
 		
 		$snippet = $order['gui']['snippet'];

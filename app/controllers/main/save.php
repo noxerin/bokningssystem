@@ -29,12 +29,21 @@ class Save extends Controller
 	}	
 	
 	public function categorieschoice(){
-		if($_POST['count'] > 0 && $_POST['count'] <= 12){	
-			$headTo = "/extras";
-			$_SESSION['count'] = $_POST['count'];	
-		}else{		
-			$headTo = "/productssecond";
-			$this->nxi_error("Du ar valt antingen för många eller för få antal!", "");
+		$product = $this->model("model_product");
+		$isSum = $product->isSum($_SESSION['product']);
+				
+		if($_POST['count'] > 0 && $_POST['count'] > 150 && $isSum[0]['type'] == "sum"){
+				$headTo = "/extras";
+				$_SESSION['count'] = "sum";
+				$_SESSION['sum'] = $_POST['count'];
+		}else{
+			if($_POST['count'] > 0 && $_POST['count'] <= 12 && $isSum[0]['type'] != "sum"){	
+				$headTo = "/extras";
+				$_SESSION['count'] = $_POST['count'];	
+			}else{		
+				$headTo = "/productssecond";
+				$this->nxi_error("Du ar valt antingen för många eller för få antal!", "");
+			}
 		}
 		header("Location: $headTo");
 	}

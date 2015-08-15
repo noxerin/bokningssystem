@@ -38,6 +38,9 @@ class Main extends Controller
 		$extra = $this->model('model_extras');
 		
 		$extras = $extra->getExtras($_SESSION['product']);
+		if(!$extras){
+			header("Location: /preview");
+		}
 		
 		$this->view('main/partials/header', "The Lodge - Presentkort");
 		$this->view('main/extras', $extras);

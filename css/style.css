@@ -289,6 +289,11 @@ select{
     appearance: none;
     padding: 6px 14px;
 }
+.checkedimg{
+	position: absolute;
+	top: 0;
+	bottom: 0;
+}
  
  
  

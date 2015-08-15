@@ -32,6 +32,17 @@ class model_product
 		return $GLOBALS['db']->query($sql, $id);
 	}
 	
+	public function isSum($id){
+		$sql = "
+			SELECT
+				type
+			FROM
+				products
+			WHERE
+				id = ?";
+		return $GLOBALS['db']->query($sql, $id);
+	}
+	
 	public function deactivate($id){
 		$sql = "
 			UPDATE

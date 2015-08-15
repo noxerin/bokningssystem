@@ -15,14 +15,14 @@
 				echo '
 				<div class="item" data-id="' . $row['id'] . '">
 					<img src="/assets/images/' . $row['image'] . '">
-					<i class="fa fa-check fa-3x selected"></i>
+					<img src="/assets/checked.png" class="checkedimg selected">
 					<h1>' . $row['name'] . '</h1>
 					<p><b>' . $price . '</b></p>
 				</div>';
 			}else{
 				echo '<div class="item" data-id="' . $row['id'] . '">
 						<img src="/assets/images/' . $row['image'] . '">
-						<i class="fa fa-circle-o fa-3x"></i>
+						<img src="/assets/checked.png" class="checkedimg" style="display: none">
 						<h1>' . $row['name'] . '</h1>
 						<p><b>' . $price . '</b></p>
 					</div>';
@@ -46,13 +46,13 @@
 	});
 	
 	$(".item").on("click", function(){
-		if($(this).find("i").hasClass("selected")){
-			$(this).find("i").removeClass("selected fa-check").addClass("fa-circle-o");
+		if($(this).find(".checkedimg").hasClass("selected")){
+			$(this).find(".checkedimg").fadeOut().removeClass("selected");
 		}else{
-	 		$(this).find("i").removeClass('fa-circle-o').addClass("selected fa-check");			
+	 		$(this).find(".checkedimg").fadeIn().addClass("selected");			
 		}
 		var allAttributes = $('.item').map(function(){
-			if($(this).find('i').hasClass("selected")){
+			if($(this).find('.checkedimg').hasClass("selected")){
 				return $(this).data('id');				
 			}
 		}).get();

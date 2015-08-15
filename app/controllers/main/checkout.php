@@ -26,6 +26,7 @@ class Checkout extends Controller
 		$product = $this->model('model_product');
 		$extra = $this->model('model_extras');
 		
+		
 		//Fetch data about product and extras
 		$products = $product->getProduct($_SESSION['product']);
 		$data['product'] = $products[0];
@@ -33,7 +34,12 @@ class Checkout extends Controller
 			$extras = $extra->getSelected($_SESSION['extras']);			
 			$data['extras'] = $extras;
 		}
-		
+
+		//Determine if product is value sum
+		if($_SESSION['count'] == "sum"){
+			$data['product']['price'] = $_SESSION['sum'];
+		}
+				
 		//Determine price for shipping and paket
 		$data['shipping'] = array();
 		switch($_SESSION['buyer']['alternative']){

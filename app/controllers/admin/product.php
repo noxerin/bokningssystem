@@ -29,10 +29,12 @@ class Product extends Controller_Admin
 	
 	public function edit($id){
 		$productmodel = $this->model('model_product');
-		
+		$extrasmodel = $this->model('model_extras');
+				
 		$this->view('admin/partials/header', "The Lodge - Redigera kategori");
 		$this->view('admin/partials/menu');
 		$this->view('admin/product_edit', $productmodel->getProduct($id));
+		$this->view('admin/partials/extras_connect', array($extrasmodel->getAll(), $extrasmodel->getExtras($id)));
 		$this->view('admin/partials/footer');
 	}
 	
@@ -49,7 +51,7 @@ class Product extends Controller_Admin
 		if(strlen($name) > 3 &&
 		   strlen($desc) > 3 &&
 		   strlen($price) > 0 &&
-		   ($type == "person" || $type == "fixed")){
+		   ($type == "person" || $type == "fixed" || $type == "sum")){
 		   
 		   //Move image			
 		   $imageFileType = pathinfo($_FILES["image"]["name"],PATHINFO_EXTENSION);
@@ -88,7 +90,7 @@ class Product extends Controller_Admin
 		   strlen($name) > 3 &&
 		   strlen($desc) > 5 &&
 		   strlen($price) > 0 &&
-		   ($type == "person" || $type == "fixed")){
+		   ($type == "person" || $type == "fixed" || $type == "sum")){
 
 		   if($productmodel->updateinfo($id,$name,$desc,$price,$type)){
 			   $this->nxi_warning('Kategori uppdaterad', '');

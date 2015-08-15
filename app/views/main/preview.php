@@ -6,8 +6,12 @@
 	<?php 
 			echo '
 				<div class="item">
-					<img src="/assets/images/' . $data[0]['src'] . '">
-					<h1>' . $_SESSION['count'] . ' st ' . $data[1]['name'] . '</h1>';
+					<img src="/assets/images/' . $data[0]['src'] . '">';
+					if($_SESSION['count'] == "sum"){
+						echo '<h1>' . $data[1]['name'] . ' ' . $_SESSION['sum'] . ' kr</h1>';
+					}else{
+						echo '<h1>' . $_SESSION['count'] . ' st ' . $data[1]['name'] . '</h1>';
+					}
 				if(isset($data[2])){
 					echo "<h2 class='extra'><b>Och så nåt litet extra</b></h2>";
 					foreach($data[2] as $row){
@@ -63,6 +67,8 @@
 }
 .info{
 	margin-top: 20px !important;
+	text-align: center;
+	white-space: pre;
 }
 .extra{
 	margin-top: 20px;

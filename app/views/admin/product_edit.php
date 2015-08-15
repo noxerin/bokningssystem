@@ -22,15 +22,19 @@
 				<input class="input" type="text" name="product[name]" value="<?=$data[0]['name']?>">
 				<label for="input">Kategoribeskrivning</label>
 				<textarea class="input" name="product[desc]" style="height: 200px;"><?=$data[0]['desc']?></textarea>
-				<div class="col-md-2" style="padding: 0;">
+				<div class="col-md-4" style="padding: 0;">
 					<label for="input">Kategoripris</label>
 					<input class="input" type="number" name="product[price]" value="<?=$data[0]['price']?>">
 					<label for="input">Typ av produkt</label>
+					<br>
 					  <label>
 					    <input type="radio" name="product[type]" value="person" <?php if($data[0]['type'] == "person"){echo "checked";}?>> Per person
 					  </label>
 					  <label>
 					    <input type="radio" name="product[type]" value="fixed" <?php if($data[0]['type'] == "fixed"){echo "checked";}?>> Fast pris
+					  </label>
+					  <label>
+					    <input type="radio" name="product[type]" value="sum" <?php if($data[0]['type'] == "sum"){echo "checked";}?>> Valfri summa
 					  </label>
 				</div>
 			</div>

@@ -16,14 +16,14 @@
 				echo '
 				<div class="item" data-id="' . $row['id'] . '">
 					<img src="/assets/images/' . $row['image'] . '">
-					<i class="fa fa-check fa-3x selected"></i>
+					<img src="/assets/checked.png" class="checkedimg selected">
 					<h1>' . $row['name'] . '</h1>
 					<p><b>' . $price . '</b></p>
 				</div>';
 			}else{
 				echo '<div class="item" data-id="' . $row['id'] . '">
 						<img src="/assets/images/' . $row['image'] . '">
-						<i class="fa fa-circle-o fa-3x"></i>
+						<img src="/assets/checked.png" class="checkedimg" style="display: none;">
 						<h1>' . $row['name'] . '</h1>
 						<p><b>' . $price . '</b></p>
 					</div>';
@@ -43,8 +43,8 @@
 	});
 	
 	$(".item").on("click", function(){
-		$(".item i").removeClass("selected fa-check").addClass("fa-circle-o");
-		$(this).find("i").removeClass('fa-circle-o').addClass("selected fa-check");
+		$(".checkedimg").fadeOut().removeClass("selected");
+		$(this).find(".checkedimg").fadeIn().addClass("selected");
 		var id = $(this).data("id");
 		$("#productid").val(id);
 	});

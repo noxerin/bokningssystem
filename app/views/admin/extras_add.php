@@ -1,34 +1,30 @@
 <div class="container">
 	<div class="col-md-12 wrapper">
 		<div class="col-md-6 control-create">
-			<h3 class="control-header">Välj en bild till kategori</h3>
-			<form method="post" action="/admin/product/addnew" enctype="multipart/form-data">
+			<h3 class="control-header">Välj en bild till tillägg</h3>
+			<form method="post" action="/admin/extras/addnew" enctype="multipart/form-data">
 				<input class="" type="file" name="image" style="margin-top: 30px;" required>
 		</div>
 		<div class="col-md-6">
-			<h2>Skapa en ny kategori</h2>
-			<p>Här lägger du till ny kategorier!</p>
-			<p>För att koppla extratilläggen går då in på tillägg <i>"koppla"!</i></p>
+			<h2>Skapa ett nytt tillägg</h2>
+			<p>Här lägger du till nya tillägg!</p>
+			<p>För att koppla extratilläggen går då in på kategori <i>"koppla"!</i></p>
 		</div>
 			<div class="col-md-12" style="margin-top: 40px;">
 				<input type="hidden" name="product[id]" required>
-				<label for="input">Kategorititel</label>
+				<label for="input">Tilläggstitel</label>
 				<input class="input" type="text" name="product[name]" required>
-				<label for="input">Kategoribeskrivning</label>
+				<label for="input">Tilläggsbeskrivning</label>
 				<textarea class="input" name="product[desc]" style="height: 200px;" required></textarea>
-				<div class="col-md-4" style="padding: 0;">
-					<label for="input">Kategoripris</label>
+				<div class="col-md-2" style="padding: 0;">
+					<label for="input">Tilläggspris</label>
 					<input class="input" type="number" name="product[price]" required>
-					<label for="input">Typ av produkt</label>
-					<br>
+					<label for="input">Typ av tillägg</label><br>
 					  <label>
 					    <input type="radio" name="product[type]" value="person" required> Per person
 					  </label>
 					  <label>
 					    <input type="radio" name="product[type]" value="fixed" required> Fast pris
-					  </label>
-					  <label>
-					    <input type="radio" name="product[type]" value="sum" required> Valfri summa
 					  </label>
 				</div>
 			</div>

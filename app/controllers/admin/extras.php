@@ -10,6 +10,15 @@ class Extras extends Controller_Admin
 		$this->view('admin/partials/footer');
 	}
 	
+	public function add(){
+		$extrasmodel = $this->model('model_extras');		
+		
+		$this->view('admin/partials/header', "The Lodge - Skapa tillägg");
+		$this->view('admin/partials/menu');
+		$this->view('admin/extras_add');
+		$this->view('admin/partials/footer');
+	}
+	
 	public function edit($id){
 		$extrasmodel = $this->model('model_extras');		
 		
@@ -19,11 +28,19 @@ class Extras extends Controller_Admin
 		$this->view('admin/partials/footer');
 	}
 	
+	public function remove($data){
+		$extrasmodel = $this->model('model_extras');		
+		
+		$extrasmodel->deactivate($data);
+		$this->nxi_warning("Tillägg inaktiverat","");
+		header("Location: /admin/extras");
+	}
+	
 	
 	//Call functions
 	
 	public function addnew(){
-		$productmodel = $this->model("model_product");
+		$extrasmodel = $this->model('model_extras');		
 		
 		$name = $_POST['product']['name'];
 		$desc = $_POST['product']['desc'];
@@ -45,8 +62,8 @@ class Extras extends Controller_Admin
 		   		$this->nxi_error("Bilden har inte ett stött format!", "Testa med jpg,png,jpeg,gif");
 			}else{
 				if(move_uploaded_file($_FILES["image"]["tmp_name"], $target_dir.$target_file.".".$imageFileType)){
-					if($productmodel->create($name,$target_file.".".$imageFileType,$desc,$price,$type)){
-						$this->nxi_warning('Kategori tillagd', '');
+					if($extrasmodel->create($name,$target_file.".".$imageFileType,$desc,$price,$type)){
+						$this->nxi_warning('Tillägg tillagd', '');
 				    }
 				}else{
 					$this->nxi_error("Fel uppstod vi flytt av bild från temporära platsen!", "");		
@@ -56,7 +73,7 @@ class Extras extends Controller_Admin
 		}else{
 			$this->nxi_error('Ett eller flera fält saknar text', 'kontrollera all text en gång till');
 		}
-		header("Location: /admin/product/");
+		header("Location: /admin/extras/");
 	}
 	
 	public function update(){

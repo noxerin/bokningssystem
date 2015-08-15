@@ -3,7 +3,6 @@
 		<div class="col-md-6 control-create">
 			<h3 class="control-header">Skapa / tilldela tillägg</h3>
 			<a href="/admin/extras/add" class="btn" style="padding-top: 12px; color: #fff !important; margin-top: 30px;">Lägg till</a>
-			<a href="/admin/extras/manage" class="btn" style="padding-top: 12px; color: #fff !important; margin-top: 20px; background: #40d47e;">Tilldela</a>
 		</div>
 		<div class="col-md-6">
 		<h2>Tilläggshantering</h2>

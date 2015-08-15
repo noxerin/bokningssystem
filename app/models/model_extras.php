@@ -6,7 +6,9 @@ class model_extras
 			SELECT
 				* 
 			FROM
-				extras";
+				extras
+			WHERE
+				active = 1";
 		return $GLOBALS['db']->query($sql);
 	}
 	
@@ -77,6 +79,27 @@ class model_extras
 			WHERE
 				id = ?";
 		return $GLOBALS['db']->query($sql, array($name, $desc, $price, $type, $id));
+	}
+	
+	public function create($name, $image, $desc, $price, $type){
+		$sql = "
+			INSERT INTO
+				extras
+				(name,image,extras.desc,price,type,active)
+			VALUES
+				(?,?,?,?,?,1)";
+		return $GLOBALS['db']->query($sql, array($name, $image, $desc, $price, $type));
+	}
+	
+	public function deactivate($id){
+		$sql = "
+			UPDATE
+				extras
+			SET
+				active = 0
+			WHERE
+				id = ?";
+		return $GLOBALS['db']->query($sql, $id);
 	}
 	
 }

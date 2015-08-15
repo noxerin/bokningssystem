@@ -16,19 +16,27 @@
 					<img src="/assets/images/' . $row['image'] . '">
 					<h1>' . $row['name'] . '</h1>
 					<p><b>' . $price . '</b></p>
-					<div class="countcontainer">
+					<div class="countcontainer">';
+			if($row['type'] == "sum"){
+				echo '
+					<label for="count">Summa i SEK</label>
+					<input type="number" class="select inputfield" style="float: none; padding: 3px; margin-left: -5px; width: 90px; text-align: center;">
+				';
+				
+			}else{	
+				echo '	
 						<label for="count">Antal</label>
-						<select class="count">';
-						for($i = 1; $i <= 12; $i ++){
-							if($_SESSION['count'] == $i){
-								echo "<option selected='selected' value='$i'>$i</option>";
-							}else{
-								echo "<option value='$i'>$i</option>";
+						<select class="count select">';
+							for($i = 1; $i <= 12; $i ++){
+								if($_SESSION['count'] == $i){
+									echo "<option selected='selected' value='$i'>$i</option>";
+								}else{
+									echo "<option value='$i'>$i</option>";
+								}
 							}
-						}
-			echo '
-						</select>
-					</div>
+				echo '	</select>';
+			}
+			echo '</div>
 					<p class="info">' . $row['desc'] . '</p>
 				</div>';
 		}
@@ -82,7 +90,7 @@
 		$("#count").val(id);
 	});
 	
-	$(".item select").on("change", function(){
+	$(".select").on("change", function(){
 		var id = $(this).val();
 		$("#count").val(id);
 	});
