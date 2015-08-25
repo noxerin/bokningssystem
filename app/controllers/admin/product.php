@@ -34,7 +34,7 @@ class Product extends Controller_Admin
 		$this->view('admin/partials/header', "The Lodge - Redigera kategori");
 		$this->view('admin/partials/menu');
 		$this->view('admin/product_edit', $productmodel->getProduct($id));
-		$this->view('admin/partials/extras_connect', array($extrasmodel->getAll(), $extrasmodel->getExtras($id)));
+		$this->view('admin/partials/extras_connect', array($extrasmodel->getAll(), $extrasmodel->getExtras($id), $id));
 		$this->view('admin/partials/footer');
 	}
 	
@@ -124,6 +124,24 @@ class Product extends Controller_Admin
 			}
 		}
 		header("Location: /admin/product/edit/".$id);
+	}
+	
+	public function updateAddonSelection(){
+		$extrasmodel = $this->model('model_extras');
+				
+		$productId = $_POST['id'];
+		$extrasArray = $_POST['extras'];
+		
+		if(isset($_POST['id'])){
+			$extrasmodel->removeRelation($productId);
+			
+			foreach($extrasArray as $row){
+				$extrasmodel->addRelation($productId, $row);
+			}
+		}
+		
+		header("Location: /admin/product/edit/".$productId);
+		
 	}
 	
 }

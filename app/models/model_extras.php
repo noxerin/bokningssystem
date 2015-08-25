@@ -102,4 +102,23 @@ class model_extras
 		return $GLOBALS['db']->query($sql, $id);
 	}
 	
+	public function addRelation($product, $extras){
+		$sql = "
+			INSERT INTO
+				extras_relations
+				(product, extras)
+			VALUES 
+				(?, ?)";	
+		return $GLOBALS['db']->query($sql, array($product, $extras));
+	}
+	
+	public function removeRelation($product){
+		$sql = "
+			DELETE FROM
+				extras_relations
+			WHERE
+				product = ?";	
+		return $GLOBALS['db']->query($sql, $product);
+	}
+	
 }
