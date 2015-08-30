@@ -45,6 +45,18 @@
 			</div>
 		</div>
 		
+		<div class="options-item">
+			ORDRAR
+			<i class="fa fa-sort-desc" style="bottom: 3px; position: relative; color: #fff;"></i>
+			<div class="options-item-dropdown">
+				<a href="/admin/orders">
+					<div class="options-item-dropdown-item">
+						Granska
+					</div>
+				</a>
+			</div>
+		</div>
+		
 		<!--<div class="options-item">
 			BILDER
 			<i class="fa fa-sort-desc" style="bottom: 3px; position: relative; color: #fff;"></i>
