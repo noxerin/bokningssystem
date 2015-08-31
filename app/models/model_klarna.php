@@ -201,7 +201,7 @@ class model_klarna
 		if ($order['status'] == "checkout_complete") {
 		    // At this point make sure the order is created in your system and send a 
 		    // confirmation email to the customer
-		    
+		    				    
 		    //Update order in our system
 			$sql = "
 				UPDATE
@@ -209,8 +209,8 @@ class model_klarna
 				SET
 					status = 'RESERVED'
 				WHERE
-					klarna = ?";
-			$GLOBALS['db']->query($sql, $order['reservation']);			
+					klarna = ?;";
+			$GLOBALS['db']->query($sql, $order['reservation']);
 
 		    $update = array();
 		    $update['status'] = 'created';

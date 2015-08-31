@@ -2,11 +2,13 @@
 class Orders extends Controller_Admin
 {
 	public function index(){
-		$productmodel = $this->model('model_product');
+		$ordermodel = $this->model('model_orders');
+		
+		$ordermodel->calculateTotalSum(9);
 		
 		$this->view('admin/partials/header', "The Lodge - Ordrar");
 		$this->view('admin/partials/menu');
-		$this->view('admin/orders');
+		$this->view('admin/orders', $ordermodel->retriveLastOrders(10));
 		$this->view('admin/partials/footer');
 	}
 	

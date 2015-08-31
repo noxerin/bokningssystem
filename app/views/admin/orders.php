@@ -12,23 +12,52 @@
 </div>
 
 <div class="container">
-	<div class="col-md-10 col-md-offset-1 orderscontainer">
-		
-		
-		<?php
-		?>
+	<div class="col-md-10 col-md-offset-1">
+		<div class="panel panel-default">
+			<div class="panel-heading">Ordrar</div>			
+				<table class="table table-hover">
+					<tr>
+						<th>#</th>
+						<th>Förnamn</th>
+						<th>Efternamn</th>
+						<th>Summa</th>
+						<th>Status</th>
+						<th>Datum</th>
+						<th></th>
+					</tr>
+					<?php
+						foreach($data as $row){
+							echo "
+							<tr>
+								<td>" . $row['id'] . "</td>
+								<td>" . $row['fname'] . "</td>
+								<td>" . $row['lname'] . "</td>
+								<td>" . $row['sum'] . " :-</td>
+								<td>" . $row['status'] . "</td>
+								<td>" . date("Y-m-d", $row['time']) . "</td>
+								<td>
+									<a href='/admin/orders/order/" . $row['id'] . "'>Visa order</a>
+								</td>
+							</tr>";
+						}
+					?>
+				</table>
+		</div>
 	</div>
 </div>
 
-<style>
+<style>	
+.control{
+	background: #f1f1f1;
+	padding: 20px;
+	margin-bottom: 40px;
+}
 .orderscontainer{
 	background: #f1f1f1;
 	overflow: auto;
 	padding: 10px;
 }
-.control{
-	background: #f1f1f1;
-	padding: 20px;
-	margin-bottom: 40px;
+.order-container{
+	background: #DAD7D7;
 }
 </style>
