@@ -124,9 +124,9 @@ class model_klarna
 			$sql = "
 					INSERT INTO 
 						orders 
-						(fname, lname, email, address, postal, country, phone, shipping_alternative, image, message, code, klarna, time) 
+						(fname, lname, email, address, postal, city, country, phone, shipping_alternative, image, message, code, klarna, time) 
 					VALUES 
-						(?,?,?,?,?,?,?,?,?,?,?,?,?);
+						(?,?,?,?,?,?,?,?,?,?,?,?,?,?);
 					SELECT LAST_INSERT_ID()";
 			$GLOBALS['db']->query($sql, 
 								array($_SESSION['buyer']['fname'],
@@ -134,6 +134,7 @@ class model_klarna
 									$_SESSION['buyer']['email'],
 									$_SESSION['buyer']['address'],
 									$_SESSION['buyer']['postal'],
+									$_SESSION['buyer']['city'],
 									$_SESSION['buyer']['country'],
 									$_SESSION['buyer']['phone'],
 									$_SESSION['buyer']['alternative'],
@@ -160,24 +161,43 @@ class model_klarna
 				$count = $_SESSION['count'];
 				$category = "PRODUCT";
 			}
+			
+			//Get current price
+			$sql = "SELECT
+						price
+					FROM
+						products
+					WHERE
+						id = ?";
+			$cost = $GLOBALS['db']->query($sql, $_SESSION['product']);
+			
 			//Initiate insert
 			$sql = "INSERT INTO 
 						order_items
-						(`order`, item_id, category, count) 
+						(`order`, item_id, category, count, cost) 
 					VALUES 
-						(?,?,?,?)";
-			$GLOBALS['db']->query($sql, array($id[0]['id'], $_SESSION['product'], $category, $count));
+						(?,?,?,?,?)";
+			$GLOBALS['db']->query($sql, array($id[0]['id'], $_SESSION['product'], $category, $count, $cost[0]['price']));
 			
 			//Insert every extras
 			if(strlen($_SESSION['extras'][0]) >= 1){
 				foreach($_SESSION['extras'] as $row){
+					//Get current price
+					$sql = "SELECT
+								price
+							FROM
+								extras
+							WHERE
+								id = ?";
+					$cost = $GLOBALS['db']->query($sql, $row);
+
 					$sql = "
 						INSERT INTO 
 							order_items
-							(`order`, item_id, category, count) 
+							(`order`, item_id, category, count, cost) 
 						VALUES 
-							(?,?,?,1)";
-					$GLOBALS['db']->query($sql, array($id[0]['id'], $row, "EXTRAS"));
+							(?,?,?,1,?)";
+					$GLOBALS['db']->query($sql, array($id[0]['id'], $row, "EXTRAS", $cost[0]['price']));
 				}
 			}
 			session_destroy();
@@ -219,4 +239,21 @@ class model_klarna
 		}
 		
 	}
+	
+	public function cancelOrder($klarnaId){
+		return $GLOBALS['klarna']->cancelReservation($klarnaId);
+	}
+	
+	public function activateOrder($klarnaId, $orderid){
+		return $GLOBALS['klarna']->activate(
+		    $klarnaId, 
+		    $orderId,    
+		    KlarnaFlags::RSRV_SEND_BY_EMAIL
+		);
+	}
+	
+	public function refundOrder($invoiceId){
+		return $GLOBALS['klarna']->creditInvoice($invoiceId);
+	}
+	
 }

@@ -78,7 +78,7 @@ a, a:hover{
 	text-decoration: none;
 	color: inherit;
 }
-.error, .warning{
+.error, .warn{
 	background: #e74c3c;
 	color: #fff;
 	border-radius: 5px;
@@ -86,7 +86,7 @@ a, a:hover{
 	position: relative;
 	z-index: 999;
 }
-.warning{
+.warn{
 	background: #f1c40f;
 }
 .error-remove{

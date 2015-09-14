@@ -23,7 +23,7 @@ a, a:hover{
 	text-decoration: none !important;
 	color: inherit !important;
 }
-.error, .warning{
+.error, .warn{
 	background: #de6153;
 	color: #fff;
 	border-radius: 5px;
@@ -34,7 +34,7 @@ a, a:hover{
 	right: 5px;
 	top: 5px;
 }
-.warning{
+.warn{
 	background: #f1c40f;
 }
 .error-remove{
@@ -79,14 +79,13 @@ a, a:hover{
 	cursor: pointer;
 	position: relative;
 }
-.options-item:hover{
-	background: #D42D6A; 
+.options-item:hover, .options-header:hover{
+	background: #D42D6A;
 }
 .options-item-dropdown{
 	display: none;
 	position: absolute;
 	width: 100%;
-	padding: 5px 10px;
 	background: #D42D6A;
 	top: 60px;
 	left: 0;
@@ -97,7 +96,7 @@ a, a:hover{
 }
 .options-item-dropdown-item{
 	margin: 1px 0;
-	padding: 5px;
+	padding: 10px 15px;
 }	
 .options-item-dropdown-item:hover{
 	background: #b41650;
@@ -195,4 +194,15 @@ MAIN STYLES
   	padding-top: 20px;
   	background-color: #f4f4f4;
   	border-radius: 3px;
+}
+.box-link{
+	padding: 4px;
+	border: 1px solid #292929;
+	transition: 0.5s;
+}
+.box-link:hover{
+	background: #f39c12;
+	color: white !important;
+	border-color: #f39c12;
+	transition: 0.3s;
 }

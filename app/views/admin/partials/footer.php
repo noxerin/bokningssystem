@@ -2,8 +2,22 @@
 	</body>
 	<script>
 		$('.options-item').on('mouseenter mouseleave', function(){
-			$(this).find('.options-item-dropdown').toggleClass('options-item-dropdown-open');
+			$(this).find('.options-item-dropdown').slideToggle('options-item-dropdown-open');
 		});
+			
+			
+		$('.accept').on("click", function(e){
+			if (confirm('Är du säker?')) {
+		    	
+			} else {
+			    e.preventDefault();
+			}
+		});
+		
+		$('a').on("click", function(e){
+			$('.fa-cog').addClass('fa-spin');
+		});
+		
 		/**
 		*
 		*	Error Handeling scripts

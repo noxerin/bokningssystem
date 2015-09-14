@@ -1,4 +1,4 @@
-<div class="warning">
+<div class="warn">
 	<i class="fa fa-remove error-remove"></i>
 	<h2>Varning!</h2>
 	<br>

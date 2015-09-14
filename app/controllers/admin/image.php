@@ -14,14 +14,19 @@ class Image extends Controller_Admin
 		$imagemodel = $this->model('model_image');
 		$result = $imagemodel->getImage($data);
 
-		if(unlink("assets/images/".$result[0]['src'])){
-			$imagemodel->remove($data);	
-			$this->nxi_warning("Bilden är borttagen!", "");
-			header("Location: /admin/image");
-		}else{
-			$this->nxi_error("Fel inträffade när bilden försöktes ta bort", "Försök igen!");
-			header("Location: /admin/image");
+		if(!$imagemodel->isUsed($data)){
+			if(unlink("assets/images/".$result[0]['src'])){
+				$imagemodel->remove($data);	
+				$this->nxi_warning("Bilden är borttagen!", "");
+			}else{
+				$this->nxi_error("Fel inträffade när bilden försöktes ta bort", "Försök igen!");
+			}
+		}else{	
+			$this->nxi_warning("Denna bilden används i ett eller flera presentkort, bilden har endast avaktiverats för nyval vid beställning", "");
+			$imagemodel->inactivate($data);
 		}
+		
+		header("Location: /admin/image");
 	}
 	
 	public function add(){

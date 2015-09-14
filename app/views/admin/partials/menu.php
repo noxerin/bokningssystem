@@ -5,6 +5,7 @@
 			</div>
 		</a>
 		
+		
 		<a href="/admin/image/">
 			<div class="options-header">
 				PRESENTKORTSBILDER
@@ -45,13 +46,19 @@
 			</div>
 		</div>
 		
-		<div class="options-item">
-			ORDRAR
+		<a href="/admin/orders">
+			<div class="options-header">
+				ORDRAR
+			</div>
+		</a>
+		
+		<div class="options-item" style="float: right; padding: 20px 50px;">	
+			<i class="fa fa-cog"></i>
 			<i class="fa fa-sort-desc" style="bottom: 3px; position: relative; color: #fff;"></i>
 			<div class="options-item-dropdown">
-				<a href="/admin/orders">
+				<a href="/admin/options/export">
 					<div class="options-item-dropdown-item">
-						Granska
+						Export
 					</div>
 				</a>
 			</div>

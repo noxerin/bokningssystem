@@ -7,7 +7,9 @@ class model_images
 			SELECT
 				*
 			FROM
-				images";
+				images
+			WHERE
+				active = 1";
 		return $GLOBALS['db']->query($sql);
 	}	
 	
