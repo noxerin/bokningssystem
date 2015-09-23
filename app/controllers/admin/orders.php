@@ -94,8 +94,18 @@ class Orders extends Controller_Admin
 			$compile = $ordermodel->compile_order_byDate(0, time());
 			$exportmodel->generate($compile, $type);
 		}
+	}
+	
+	public function order_shipped($id){
+		$ordermodel = $this->model('model_orders');
 		
-		
+		$order = $ordermodel->retriveOrder($id);
+		if($order[0][0]['shipped'] == 0){
+			$ordermodel->shipped($id, 1);
+		}else{
+			$ordermodel->shipped($id, 0);
+		}
+		header("Location: /admin/orders/order/".$id);
 	}
 
 	

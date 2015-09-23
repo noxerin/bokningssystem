@@ -25,4 +25,15 @@ class model_auth
 		}
 	}
 	
+	public function getAdminUpdates(){
+		$sql = "
+			SELECT
+				email
+			FROM
+				admin
+			WHERE
+				updates = 'ALL'";
+		return $GLOBALS['db']->query($sql);
+	}
+	
 }

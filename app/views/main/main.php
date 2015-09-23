@@ -1,4 +1,7 @@
 <div class="textcontainer">
+	<div class="book btn">
+		<a href="/book">Har du redan ett presentkort?</a>
+	</div>
 	<h1>PRESENTKORT</h1>
 	<p>Först bestämm en design.<p>
 	<p>Välj ett motiv och skriv ett passande text till ditt presentkort</p>
@@ -37,6 +40,11 @@
 		<input type="submit" value="Nästa: Välj upplevelse" class="btn" style="right: 20px; position: absolute; bottom: 20px;">	
 	</div>
 </form>
+<style>
+	.book{
+		
+	}
+</style>
 
 <script>
 	$(document).ready(function(){

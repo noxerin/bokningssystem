@@ -26,7 +26,7 @@
 				<div class="searchowl"></div>
 				<form method="get" id="searchform" action="http://thelodge.se">
 					<input type="text" class="searchbox" name="s" placeholder="Sök">
-					<input type="submit" class="submit" name="submit" id="searchsubmit" value="Sök">
+					<input type="submit" class="submit btn" name="submit" id="searchsubmit" value="Sök" style="margin-right: 10px;margin-top: 2px;">
 				</form>
 			</div>
 			<div class="bildspel">

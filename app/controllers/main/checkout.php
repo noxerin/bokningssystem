@@ -81,7 +81,17 @@ class Checkout extends Controller
 	
 	public function confirm(){
 		$klarna = $this->model('model_klarna');
-		$klarna->confirm($_GET['klarna_order']);
+		$authmodel = $this->model('model_auth');
+		$ordermodel = $this->model('model_orders');
+		$mailmodel = $this->model('model_mail');
+
+		$admin_email = $authmodel->getAdminUpdates();
+		$order_data = $ordermodel->retriveOrderByKlarnaId($_GET['klarna_order']);
+		$total_data = $ordermodel->retriveOrder($order_data[0]['id']);
+		
+		if($klarna->confirm($_GET['klarna_order'])){
+			$mailmodel->mail_confirm($total_data);
+		}
 	}
 	
 }

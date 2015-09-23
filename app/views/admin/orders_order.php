@@ -26,6 +26,13 @@
 		</div>
 		<div class="col-md-6">
 			<a href="/admin/orders/order_export/ORDER/<?=$data[0][0]['id']?>" style="float: right;" class="box-link">Exportera till ett excel doc</a>
+			<?php
+				if($data[0][0]['shipped'] == 0){
+					echo '<a href="/admin/orders/order_shipped/' . $data[0][0]['id'] . '" style="float: right; margin-right: 10px;" class="box-link">Markera som skickad</a>';
+				}else{
+					echo '<a href="/admin/orders/order_shipped/' . $data[0][0]['id'] . '" style="float: right; margin-right: 10px;" class="box-link accept">Ordern är skickad, avmarkera?</a>';
+				}
+			?>
 			<h2>Order</h2>
 			<p>Klarnas fakturor har alla en typ av status!</p>
 			<p>PENDING: Betyder att statusen på fakturan ej är känd! Det går oftast ändå att aktivera fakturan!</p>

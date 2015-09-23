@@ -142,9 +142,9 @@ MAIN STYLES
 	font-size: 12px;
 }
 .latest-actions{
-	height: 500px;
 	border-left: 4px solid #f1c40f;
 	border-right: 4px solid #f1c40f;
+	margin-bottom: 20px;
 }
 .latest-actions-event:hover{
 	background: rgba(52, 73, 95, 0.1);

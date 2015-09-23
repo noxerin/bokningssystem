@@ -221,6 +221,9 @@ class model_klarna
 		if ($order['status'] == "checkout_complete") {
 		    // At this point make sure the order is created in your system and send a 
 		    // confirmation email to the customer
+		    
+		    //Mail sendout
+		    //Both customer and admin
 		    				    
 		    //Update order in our system
 			$sql = "
@@ -236,6 +239,10 @@ class model_klarna
 		    $update['status'] = 'created';
 		
 		    $order->update($update);
+		    
+		    return true;
+		}else{
+			return false;
 		}
 		
 	}

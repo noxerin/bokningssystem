@@ -96,6 +96,17 @@ class model_orders
 
 	}
 	
+	public function retriveOrderByKlarnaId($klarna){
+		$sql = "
+			SELECT
+				*
+			FROM
+				orders
+			WHERE
+				klarna = ?";
+		return $GLOBALS['db']->query($sql, $klarna);
+	}
+	
 	public function markAs($klarnaId, $mark){
 		$sql = "
 			UPDATE
@@ -258,6 +269,33 @@ class model_orders
 		}
 		
 		return $order;
+	}
+	
+	public function shipped($id, $value){
+		$sql = "
+			UPDATE
+				orders
+			SET
+				shipped = ?
+			WHERE
+				id = ?";
+		$GLOBALS['db']->query($sql, array($value, $id));
+	}
+	
+	public function checkIfExist($code){
+		$sql = "
+			SELECT
+				*
+			FROM
+				orders
+			WHERE
+				code = ?";
+		$result = $GLOBALS['db']->query($sql, $code);
+		if($GLOBALS['db']->countRow() > 0){
+			return array(true, $result[0]['id']);
+		}else{
+			return false;
+		}
 	}
 	
 }
