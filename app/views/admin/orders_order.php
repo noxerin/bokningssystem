@@ -113,7 +113,7 @@
 				<div class="product-head">
 					<ul>
 						<li class="li1"><h3>TYP</h3></li>
-						<li class="li2"><h3>ANTAL</h3></li>
+						<li class="li2"><h3>ANVÄNDNA/ANTAL</h3></li>
 						<li class="li3"><h3>PRIS Á</h3></li>
 						<li class="li4"><h3>TOTAL</h3></li>
 					</ul>
@@ -124,7 +124,7 @@
 					<div class="product">
 						<ul>
 							<li class="li1"><p>Presentkort - ' . $data[1][0]['name'] . '</p></li>
-							<li class="li2"><p>' . $data[1][0]['count'] . '</p></li>
+							<li class="li2"><p>' . $data[1][0]['used'] . ' / ' .$data[1][0]['count'] . '</p></li>
 							<li class="li3"><p>' . $data[1][0]['cost'] . ' :-</p></li>
 							<li class="li4"><p>' . $data[1][0]['cost']*$data[1][0]['count'] . ' :-</p></li>
 						</ul>
@@ -138,7 +138,7 @@
 							<div class="product">
 								<ul>
 									<li class="li1"><p>Tillägg - ' . $row['name'] . '</p></li>
-									<li class="li2"><p>1</p></li>
+									<li class="li2"><p>' . $row['used'] . ' / 1</p></li>
 									<li class="li3"><p>' . $row['cost'] . ' :-</p></li>
 									<li class="li4"><p>' . $row['cost'] . ' :-</p></li>
 								</ul>
@@ -226,10 +226,13 @@ li{
 	display: inline-block;
 }
 .li1{
-	width: 35%;
+	width: 30%;
 }
-.li2, .li3, .li4{
-	width: 15%;
+.li2{
+	width: 25%;
+}
+.li3, .li4{
+	width: 10%;
 }
 .li4{
 	text-align: center;
