@@ -6,18 +6,18 @@
 <div class="dottedborder"></div>
 <div class="infoContainer">
 	<div class="infoImage">
-		<img src="/assets/images/<?=$data[1][0]['image']?>">
+		<img src="/assets/images/<?=$data[0][1][0]['image']?>">
 	</div>
 	<div class="infoText">
-		<h2><?=$data[1][0]['name']?></h2>
+		<h2><?=$data[0][1][0]['name']?></h2>
 		<br>
-		<p><?=$data[1][0]['desc']?></p>
+		<p><?=$data[0][1][0]['desc']?></p>
 		<div class="dottedborder"></div>
 		<h2>Presentkortsmedelande:</h2>
 		<br>
 		<?php 
-			if(strlen($data[0][0]['message']) > 0){
-				echo '<p style="text-align: center;">' . $data[0][0]['message'] . '</p>';
+			if(strlen($data[0][0][0]['message']) > 0){
+				echo '<p style="text-align: center;">' . $data[0][0][0]['message'] . '</p>';
 			}else{
 				echo '<p style="text-align: center;">Inget meddelande!</p>';
 			}
@@ -37,20 +37,20 @@
 				</ul>
 			</div>
 			<?php
-			$totalSum = $data[1][0]['cost']*$data[1][0]['count'];
+			$totalSum = $data[0][1][0]['cost']*$data[0][1][0]['count'];
 			echo '
 				<div class="product">
 					<ul>
-						<li class="li1"><p>Presentkort - ' . $data[1][0]['name'] . '</p></li>
-						<li class="li2"><p>' . $data[1][0]['used'] . ' / ' .$data[1][0]['count'] . '</p></li>
-						<li class="li3"><p>' . $data[1][0]['cost'] . ' :-</p></li>
-						<li class="li4"><p>' . $data[1][0]['cost']*$data[1][0]['count'] . ' :-</p></li>
+						<li class="li1"><p>Presentkort - ' . $data[0][1][0]['name'] . '</p></li>
+						<li class="li2"><p>' . $data[0][1][0]['used'] . ' / ' .$data[0][1][0]['count'] . '</p></li>
+						<li class="li3"><p>' . $data[0][1][0]['cost'] . ' :-</p></li>
+						<li class="li4"><p>' . $data[0][1][0]['cost']*$data[0][1][0]['count'] . ' :-</p></li>
 					</ul>
 					<div class="product-seperator"></div>
 				</div>';
 
-				if(count($data[2]) > 0){
-					foreach($data[2] as $row){
+				if(count($data[0][2]) > 0){
+					foreach($data[0][2] as $row){
 						$totalSum += $row['cost'];
 						echo '
 						<div class="product">
@@ -64,7 +64,8 @@
 						</div>';
 					}
 				}
-			?>
+			?>	
+			<small style="margin-left: 41px;">* Notera att ett tillägg som inte har använts när alla huvudprodukter är använda förblir inlåsta</small>
 		</div>
 	</div>
 </div>
@@ -76,7 +77,7 @@
 	<div class="bookingAltContainer">
 			<?php 
 				if($_SESSION['book']['code'] != $_GET['code']){
-					if($data[1][0]['used'] == $data[1][0]['count']){
+					if($data[0][1][0]['used'] == $data[0][1][0]['count']){
 						echo '
 						<div class="bookingCountContainer">
 							<div class="bookingCountMain">
@@ -93,13 +94,13 @@
 				<div>
 					<form action="/book/save_count" method="post">
 						<div class="bookingCountInput">
-							<p><?=$data[1][0]['name']?></p>
-							<input type="number" name="count[0][count]" class="inputCount" value="" max="<?=$data[1][0]['count']-$data[1][0]['used']?>" min="1" onkeydown="return false">
-							<input type="hidden" name="count[0][id]" value="<?=$data[1][0]['id']?>">
+							<p><?=$data[0][1][0]['name']?></p>
+							<input type="number" name="count[0][count]" class="inputCount" value="" max="<?=$data[0][1][0]['count']-$data[0][1][0]['used']?>" min="1" onkeydown="return false">
+							<input type="hidden" name="count[0][id]" value="<?=$data[0][1][0]['id']?>">
 						</div>
 						<?php
 						$count = 1;
-						foreach($data[2] as $row){
+						foreach($data[0][2] as $row){
 							if($row['used'] != $row['count']){
 								echo '
 								<div class="bookingCountInput">
@@ -350,14 +351,43 @@ function resetChoice(){
 }
 
 $(function() {
+	<?php
+		if(count($data[1]) >= 1){
+			echo "availableDates = [";
+			foreach($data[1] as $row){
+				echo '"' . date("m-d-Y", $row['time_from']) . '",';
+			}
+			echo "];";
+		}
+	?>
     $('#datepicker').datepicker({
-        changeMonth: true,
+	    dateFormat: 'yy-mm-dd',
+	    beforeShowDay: function(d) {
+	        var dmy = (d.getMonth()+1)
+	        if(d.getMonth()<9) 
+	            dmy="0"+dmy; 
+	        dmy+= "-"; 
+	
+	        if(d.getDate()<10) dmy+="0"; 
+	            dmy+=d.getDate() + "-" + d.getFullYear(); 
+	
+	        console.log(dmy+' : '+($.inArray(dmy, availableDates)));
+	
+	        if ($.inArray(dmy, availableDates) != -1) {
+	            return [true, "","Available"]; 
+	        } else{
+	             return [false,"","unAvailable"]; 
+	        }
+	    },
+	    changeMonth: true,
         changeYear: true,
         showButtonPanel: true,
-        dateFormat: 'yy-mm-dd',
-        onSelect: function (dateText, inst) {
+	    todayBtn: "linked",
+	    autoclose: true,
+	    todayHighlight: true,
+		onSelect: function (dateText, inst) {
         	console.log(dateText + " Chosen");
-        	fetchDates(<?=$data[1][0]['id']?>  , dateText);
+        	fetchDates(<?=$data[0][1][0]['id']?>  , dateText);
         	resetChoice();
         },
         onClose: function(dateText, inst) { 

@@ -22,6 +22,17 @@ class model_booking
 		return $GLOBALS['db']->query($sql, $id);
 	}
 	
+	public function getAllByProduct($id){
+		$sql = "
+			SELECT
+				*
+			FROM
+				book_times
+			WHERE
+				product = ?";
+		return $GLOBALS['db']->query($sql, $id);
+	}
+	
 	public function addBooking($booking_id, $order_id, $fname, $lname, $phone, $email){
 		if($this->checkRemainingSeats($booking_id) >= $_SESSION['book']['product']['count'] && $_SESSION['book']['product']['count'] > 0){
 			if($this->orderRemaininingSeats($order_id)){

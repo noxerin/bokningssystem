@@ -14,6 +14,7 @@ class Book extends Controller{
 			$_SESSION['book'] = "";
 		}
 		$ordermodel = $this->model('model_orders');
+		$bookingmodel = $this->model('model_booking');
 		
 		$result = $ordermodel->checkIfExist(str_replace("-", "", str_replace(" ", "", $_GET['code'])));
 		
@@ -22,7 +23,8 @@ class Book extends Controller{
 			header('Location: /book/');
 		}else{
 			
-			$data = $ordermodel->retriveOrder($result[1]);
+			$data[0] = $ordermodel->retriveOrder($result[1]);
+			$data[1] = $bookingmodel->getAllByProduct($data[0][1][0]['id']);
 			
 			$this->view('main/partials/header', "The Lodge - Boka");
 			$this->view('main/book_show', $data);
@@ -102,12 +104,24 @@ class Book extends Controller{
 		
 		if($bookingmodel->addBooking($booking_time[0]['id'], $order[0][0]['id'], $fname, $lname, $phone, $email)){
 			$_SESSION['book'] = "";
-			header("Location: /book/success");
+			header("Location: /book/book_confirm/".$booking_time[0]['id']);
 		}else{
 			$this->nxi_error("Något gick fel!","Gå till baka till början och försök igen!");
 			$_SESSION['book'] = "";
 			header("Location: /book/");
 		}
+	}
+	
+	public function book_confirm($booking_id = null){
+		$bookingmodel = $this->model('model_booking');
+		$productmodel = $this->model('model_product');
+		
+		$data[0] = $bookingmodel->getBookingTime($booking_id);
+		$data[1] = $productmodel->getProduct($data[0][0]['product']);
+ 		
+		$this->view('main/partials/header', "The Lodge - Bokning klar");
+		$this->view('main/book_confirm', $data);
+		$this->view('main/partials/footer');	
 	}
 	
 	

@@ -42,7 +42,7 @@
 </style>
 <div class="col-md-offset-4 col-md-4 login">
 	<div class="col-md-offset-2 col-md-8" style="padding: 20px 0;">
-		<img src="/assets/logo.png" style="margin-left: 40px;">
+		<img src="/assets/logo.png" class="col-md-10 col-md-offset-1 " style="display: block;">
 		<form method="post" action="/admin/auth/login">
 			<input class="input" type="email" placeholder="Email" name="user">
 			<input class="input" type="password" placeholder="password" name="pass">
