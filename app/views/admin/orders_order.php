@@ -138,7 +138,7 @@
 							<div class="product">
 								<ul>
 									<li class="li1"><p>Tillägg - ' . $row['name'] . '</p></li>
-									<li class="li2"><p>' . $row['used'] . ' / 1</p></li>
+									<li class="li2"><p>' . $row['used'] . ' / ' .$row['count'] . '</p></li>
 									<li class="li3"><p>' . $row['cost'] . ' :-</p></li>
 									<li class="li4"><p>' . $row['cost'] . ' :-</p></li>
 								</ul>

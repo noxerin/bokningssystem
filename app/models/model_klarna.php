@@ -5,8 +5,8 @@ class model_klarna
 	function __construct(){	
 		//Configure the klarna obj
 		$GLOBALS['klarna']->config(
-		    3950,                    // Merchant ID
-		    'eTtv64VfxLIsum8',       // Shared secret
+		    $GLOBALS['config']['klarna']['eid'], // Merchant ID
+		    $GLOBALS['config']['klarna']['sharedSecret'],       // Shared secret
 		    KlarnaCountry::SE,    // Purchase country
 		    KlarnaLanguage::SV,   // Purchase language
 		    KlarnaCurrency::SEK,  // Purchase currency

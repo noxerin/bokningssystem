@@ -41,6 +41,26 @@ class model_orders
 		return $GLOBALS['db']->query($sql, array($search,$search,$search,$search,$search,$search,$search, $search));
 	}
 	
+	public function retriveGiftcardSearchOrders($search){
+		$search = $search . "%";
+		
+		$sql = "
+			SELECT
+				*
+			FROM
+				orders
+			WHERE
+				((fname LIKE ?) OR (lname LIKE ?) OR (address LIKE ?) OR (code LIKE ?) OR (klarna LIKE ?) OR (id LIKE ?) OR (FROM_UNIXTIME(time, '%Y-%m-%d') LIKE ?) OR (status LIKE ?))
+			AND	
+				status = 'ACTIVE'
+			ORDER BY
+				id
+					DESC";
+			
+		return $GLOBALS['db']->query($sql, array($search,$search,$search,$search,$search,$search,$search, $search));
+	}
+
+	
 	public function retriveOrder($orderId){
 		$sql = "
 			SELECT 

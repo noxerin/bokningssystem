@@ -74,9 +74,11 @@ class Save extends Controller
 		   in_array($_POST['buyer']['country'], array("SE", "DK", "NO")) &&
 		   strlen($_POST['buyer']['phone']) > 4 &&
 		   in_array($_POST['buyer']['alternative'], array('1', '2', '3'))){
+			   
 			$_SESSION['buyer'] = $_POST['buyer'];
 			header('Location: /checkout/review');
 		}else{
+			$_SESSION['buyer'] = $_POST['buyer'];
 			$this->nxi_error('Fel på något fält kontrollera igen!', '');
 			header("Location: /checkout");
 		}

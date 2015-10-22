@@ -52,6 +52,12 @@
 			</div>
 		</a>
 		
+		<a href="/admin/giftcard">
+			<div class="options-header">
+				PRESENTKORT
+			</div>
+		</a>
+		
 		<div class="options-item" style="float: right; padding: 20px 50px;">	
 			<i class="fa fa-cog"></i>
 			<i class="fa fa-sort-desc" style="bottom: 3px; position: relative; color: #fff;"></i>
