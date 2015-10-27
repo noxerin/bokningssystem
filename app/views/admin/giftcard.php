@@ -39,7 +39,7 @@
 							<td>" . $row['fname'] . "</td>
 							<td>" . $row['lname'] . "</td>
 							<td>" . date("Y-m-d", $row['time']) . "</td>
-							<td>" . date("Y-m-d", $row['time'] + 31536000) ."</td>
+							<td>" . date("Y-m-d", $row['time'] + $row['expires']) ."</td>
 							<td>
 								<a href='/admin/giftcard/show/" . $row['id'] . "'>Visa presentkort</a>
 							</td>

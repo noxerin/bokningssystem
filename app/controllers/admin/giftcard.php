@@ -64,4 +64,12 @@ class Giftcard extends Controller_Admin
 		}
 	}
 	
+	public function extend($orderId){
+		$ordermodel = $this->model("model_orders");
+		
+		$ordermodel->extend($orderId);
+		
+		header("Location: /admin/giftcard/show/".$orderId);
+	}
+	
 }

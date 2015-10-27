@@ -1,7 +1,6 @@
 <div class="textcontainer">
 	<h1>Ditt presentkort</h1>
 	<p>Kontrollera ditt presentkort eller gör en bokning!<p>
-	<p>Välj ett datum så kommer systemet automatiskt att ge några exempel på närliggande bokningsalternativ</p>
 </div>
 <div class="dottedborder"></div>
 <div class="infoContainer">
@@ -65,10 +64,13 @@
 					}
 				}
 			?>	
-			<small style="margin-left: 41px;">* Notera att ett tillägg som inte har använts när alla huvudprodukter är använda förblir inlåsta</small>
+			<small style="margin-left: 41px;">* Vill du ändra till en annan produkt kontakta The lodge på telefon</small>
 		</div>
 	</div>
 </div>
+<?php
+	if($data[0][1][0]['bookable'] == 1 && ($data[0][0][0]['time'] + $data[0][0][0]['expires']) > time()){	
+?>
 <div class="dottedborder">
 	<h2 style="margin-top: -30px;">Välj ett datum så får vi se vilka tider som ligger nära!</h2>
 </div>
@@ -135,6 +137,9 @@
 		<input type="submit" class="btn btndisabled" value="Nästa" disabled style="padding: 10px 15px;">
 	</form>
 </div>
+<?php
+	}	
+?>
 <style>
 .bookingContainer{
 	width: 95%;

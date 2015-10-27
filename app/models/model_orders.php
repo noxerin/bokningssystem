@@ -318,4 +318,28 @@ class model_orders
 		}
 	}
 	
+	public function extend($orderId){
+		$sql = "
+			SET SQL_SAFE_UPDATES = 0;
+
+			UPDATE
+				order_items
+			SET
+				used = used + (count * 10 / 100)
+			WHERE
+				order_items.order = ?
+			AND
+				category = 'SUM'";
+		$GLOBALS['db']->query($sql, $orderId);
+		
+		$sql = "
+			UPDATE
+				orders
+			SET
+				expires = orders.expires + '63072000'
+			WHERE
+				id = ?";
+		$GLOBALS['db']->query($sql, $orderId);
+	}
+	
 }

@@ -3,16 +3,21 @@
 		<div class="col-md-6 control-create">
 			<h3 class="control-header">Presentkort: <?=$data[0][0]['code']?></h3>
 			<h4>Skapad: <?=date("Y-m-d h:m", $data[0][0]['time'])?></h4>
-			<h4>Löper ut: <?=date("Y-m-d h:m", $data[0][0]['time'] + 31536000)?></h4>
+			<h4>Löper ut: <?=date("Y-m-d h:m", $data[0][0]['time'] + $data[0][0]['expires'])?></h4>
 		</div>
 		<div class="col-md-6">
 			<?php
 				if($data[1][0]['category'] != "SUM"){
+					echo '<a href="" style="float: right; margin-right: 10px; background: #f18477;" class="box-link">Förläng giltighetstid</a>
+						<small>* Obs vid förlängning så måste kort omvandlas till summa för att kunna subtrahera -10% av totalsumman</small>';
 					echo '
 					<a href="/admin/giftcard/convert/' . $data[0][0]['id'] . '" class="btn accept" style="padding-top: 12px; color: #fff !important; margin-top: 30px; background: #e67e22;">
 						Konvertera till summa
 					</a>
 					';	
+				}else{	
+					echo '<a href="/admin/giftcard/extend/' . $data[0][0]['id'] . '" style="float: right; margin-right: 10px;" class="box-link">Förläng giltighetstid</a>
+					<small>* Obs vid förlängning så tillkommer en subtraktion på -10% av totalsumman och en förlängs med 2 år</small>';
 				}
 			?>
 			<a href="/admin/giftcard/edit/<?=$data[0][0]['id']?>" class="btn" style="padding-top: 12px; color: #fff !important; margin-top: 30px; background: #35cf76;">

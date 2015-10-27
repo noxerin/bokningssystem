@@ -140,7 +140,7 @@ class model_klarna
 									$_SESSION['buyer']['alternative'],
 									$_SESSION['image'],
 									$_SESSION['message'],
-									substr(hash('sha512', $order['reservation'] . rand(1, 1000)), 1, 12),
+									substr(hash('sha512', $order['reservation'] . rand(1, 1000)), 1, 8),
 									$order['reservation'],
 									time()));
 			//Create relation table for products and extras in order
