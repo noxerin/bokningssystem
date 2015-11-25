@@ -36,6 +36,16 @@ class Giftcard extends Controller_Admin
 		$this->view('admin/partials/footer');
 	}
 	
+	public function create(){
+		$productmodel = $this->model("model_product");
+		$extrasmodel = $this->model("model_extras");
+
+		$this->view('admin/partials/header', 'The Lodge - Presentkort ');
+		$this->view('admin/partials/menu');
+		$this->view("admin/giftcard_create", array($productmodel->getAllActive(), $extrasmodel->getAll()));
+		$this->view('admin/partials/footer');
+	}
+	
 	
 	//Call functions
 	

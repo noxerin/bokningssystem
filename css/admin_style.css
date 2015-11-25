@@ -165,6 +165,9 @@ MAIN STYLES
   border: 2px solid #dddddd;
   border-radius: 3px;
 }
+.input-disabled{
+	background-color: #e1dede;
+}
 .btn{
   background: #25B7DB;
   outline: 0;

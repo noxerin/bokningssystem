@@ -1,9 +1,14 @@
 <div class="container" style="margin-top: 50px;">
 	<div class="col-md-10 col-md-offset-1 control">
-		<div class="col-md-12">
+		<div class="col-md-9">
 			<h2>Presentkort</h2>
 			<p>Här kan du granska, ändra, konvertera och förlänga presentkort!</p>
 			<p>Endast aktiva / delvis använda presentkort visas här, för att se kort som ej har blivit aktiverade ännu gå till "ORDRAR"</p>
+		</div>
+		<div class="col-md-3">
+			<a href="/admin/giftcard/create" class="btn" style="padding-top: 12px; color: #fff !important; margin-top: 30px;">
+				Skapa presentkort
+			</a>
 		</div>
 	</div>
 </div>

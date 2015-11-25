@@ -75,3 +75,10 @@
 	margin-bottom: 40px;
 }
 </style>
+<script>
+	$('.search').on("change", function(){
+		var term = $(this).val();
+		$('.search-href').attr("href", "/admin/giftcard/search/" + term)
+
+	});
+</script>

@@ -1,6 +1,12 @@
 <div class="textcontainer">
 	<h1>Ditt presentkort</h1>
 	<p>Kontrollera ditt presentkort eller gör en bokning!<p>
+	<p><b>Löper ut: <?=date("Y-m-d h:m", ($data[0][0][0]['time'] + $data[0][0][0]['expires']));?>
+	<?php
+	if(($data[0][0][0]['time'] + $data[0][0][0]['expires']) < time()){
+		echo "<br><i style='color: #f18477;'>* Ditt presentkort har tyvär löpt ut! Kontakta Thelodge för att förlänga giltighetstiden</i>";	
+	}
+	?>
 </div>
 <div class="dottedborder"></div>
 <div class="infoContainer">
