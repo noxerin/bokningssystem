@@ -62,9 +62,18 @@ var data = {
             pointHighlightStroke: "rgba(220,220,220,1)",
             data: [
             <?php
-	            foreach($data[0] as $row){
-		            echo $row . ',';
-	            }
+	            echo $data[0]["Januari"] . ", ".
+	            	 $data[0]["Februari"] . ", ".
+	            	 $data[0]["Mars"] . ", ".
+	            	 $data[0]["April"] . ", ".
+	            	 $data[0]["Maj"] . ", ".
+	            	 $data[0]["Juni"] . ", ".
+	            	 $data[0]["Juli"] . ", ".
+	            	 $data[0]["Augusti"] . ", ".
+	            	 $data[0]["September"] . ", ".
+	            	 $data[0]["Oktober"] . ", ".
+	            	 $data[0]["November"] . ", ".
+	            	 $data[0]["December"];
             ?>
             ]
         }
@@ -89,36 +98,60 @@ var myLineChart = new Chart(ctx[0]).Line(data, {
 
 //Most selling product
 var data = [
-    {
-        value: <?=$data[1][0]['item_occurrence']?>,
-        color:"#F7464A",
-        highlight: "#FF5A5E",
-        label: "<?=$data[1][0]['name']?>"
-    },
-    {
-        value: <?=$data[1][1]['item_occurrence']?>,
-        color: "#46BFBD",
-        highlight: "#5AD3D1",
-        label: "<?=$data[1][1]['name']?>"
-    },
-    {
-        value: <?=$data[1][2]['item_occurrence']?>,
-        color: "#FDB45C",
-        highlight: "#FFC870",
-        label: "<?=$data[1][2]['name']?>"
-    },
-    {
-        value: <?=$data[1][3]['item_occurrence']?>,
-        color:"#2ecc71",
-        highlight: "#2cc36b",
-        label: "<?=$data[1][3]['name']?>"
-    },
-    {
-        value: <?=$data[1][4]['item_occurrence']?>,
-        color: "#2c3e50",
-        highlight: "#34495e",
-        label: "<?=$data[1][4]['name']?>"
-    }
+ <?php
+	$int = 1;
+	foreach($data[2] as $row){
+		switch($int){
+		    case 1:
+		    	echo '
+		    	{
+			        value: ' . $data[1][0]['item_occurrence'] . ',
+			        color:"#F7464A",
+			        highlight: "#FF5A5E",
+			        label: "' . $data[1][0]['name'] . ' "
+			    }';
+			break;
+			case 2:
+				echo '
+		    	,{
+			        value: ' . $data[1][1]['item_occurrence'] . ',
+			        color:"#46BFBD",
+			        highlight: "#5AD3D1",
+			        label: "' . $data[1][1]['name'] . ' "
+			    }';
+			break;
+			case 3:
+				echo '
+		    	,{
+			        value: ' . $data[1][2]['item_occurrence'] . ',
+			        color:"#2980b9",
+			        highlight: "#3498db",
+			        label: "' . $data[1][2]['name'] . ' "
+			    }';
+			break;
+			case 4:
+				echo '
+		    	,{
+			        value: ' . $data[1][3]['item_occurrence'] . ',
+			        color:"#f39c12",
+			        highlight: "#f1c40f",
+			        label: "' . $data[1][3]['name'] . ' "
+			    }';
+			break;
+			case 5:
+				echo '
+		    	,{
+			        value: ' . $data[1][4]['item_occurrence'] . ',
+			        color:"#2c3e50",
+			        highlight: "#34495e",
+			        label: "' . $data[1][4]['name'] . ' "
+			    }';
+			break;
+		}
+		$int++;
+	}
+	?>
+
 ]
 var myLineChart = new Chart(ctx[1]).Pie(data);
 //Most sold today
