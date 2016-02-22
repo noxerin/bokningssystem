@@ -1,7 +1,7 @@
 <?php
 ob_start();
 include_once 'settings.php';
-include_once './payex/PxOrder.php';
+include_once 'payex/PxOrder.php';
 
 	
 	//Parameters for Initialize8. Check payexpim.com for how the array should be constructed. For PxOrder.Initialize8: http://www.payexpim.com/technical-reference/pxorder/initialize8/.

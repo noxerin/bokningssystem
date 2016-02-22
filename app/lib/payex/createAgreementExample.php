@@ -1,8 +1,8 @@
 <?php
 ob_start();
 include_once 'settings.php';
-include_once './payex/PxOrder.php';
-include_once './payex/PxAgreement.php';
+include_once 'payex/PxOrder.php';
+include_once 'payex/PxAgreement.php';
 
 	//Parameters for CreateAgreement3. Check payexpim.com for how the array should be constructed. For PxAgreement.CreateAgreement3: http://www.payexpim.com/technical-reference/pxagreement/createagreement3/.
 	$createAgreement3Params = array

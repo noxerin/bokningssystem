@@ -22,6 +22,7 @@ class Checkout extends Controller
 			die;
 		}
 		//Model import
+		$klarna = $this->model('model_klarna');
 		$product = $this->model('model_product');
 		$extra = $this->model('model_extras');
 		
@@ -60,7 +61,7 @@ class Checkout extends Controller
 
 		
 		$this->view('main/partials/header', "The Lodge - Presentkort");
-		$this->view('main/review', array(null, $data));
+		$this->view('main/review', array($klarna->checkout($data), $data));
 		$this->view('main/partials/footer');
 	}
 	
@@ -71,6 +72,7 @@ class Checkout extends Controller
 			die;
 		}
 		//Model import
+		$klarna = $this->model('model_klarna');
 		
 		$this->view('main/partials/header', "The Lodge - Presentkort");
 		$this->view('main/partials/empty', $klarna->complete($_GET['klarna_id']));

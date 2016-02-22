@@ -2,8 +2,8 @@
 
 ob_start();
 include_once 'settings.php';
-include_once './payex/PxOrder.php';
-include_once './payex/InvoiceOrderlines.php';
+include_once 'payex/PxOrder.php';
+include_once 'payex/InvoiceOrderlines.php';
 
 // Create an invoiceOrderlines-object and add some orderlines to it.
 $ivol = new invoiceOrderLines();

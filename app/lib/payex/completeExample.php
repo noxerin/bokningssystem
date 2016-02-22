@@ -1,7 +1,7 @@
 <?php
 
 include_once 'settings.php';
-include_once './payex/PxOrder.php';
+include_once 'payex/PxOrder.php';
 
 	
 	$orderRef = stripcslashes( $_GET['orderRef'] );
