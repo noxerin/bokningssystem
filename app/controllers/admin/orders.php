@@ -25,6 +25,7 @@ class Orders extends Controller_Admin
 	
 	//Call functions
 	
+	/* Deprecated
 	public function order_decline($klarnaId, $orderId){
 		$klarnamodel = $this->model('model_klarna');
 		$ordermodel = $this->model('model_orders');
@@ -37,8 +38,9 @@ class Orders extends Controller_Admin
 		}
 		
 		header("Location: /admin/orders/order/".$orderId);
-	}
+	}*/
 	
+	/* Deprecated 
 	public function order_activate($klarnaId, $orderId){		
 		$klarnamodel = $this->model('model_klarna');
 		$ordermodel = $this->model('model_orders');
@@ -53,8 +55,9 @@ class Orders extends Controller_Admin
 		}
 
 		header("Location: /admin/orders/order/".$orderId);
-	}
+	}*/
 	
+	/*Deprecated
 	public function order_refund($invoiceId){		
 		$klarnamodel = $this->model('model_klarna');
 		$ordermodel = $this->model('model_orders');
@@ -67,11 +70,16 @@ class Orders extends Controller_Admin
 		}
 
 		header("Location: /admin/orders/order/".$invoiceId);
-	}
+	}*/
 	
-	public function order_checkstatus($klarnaId){
-		$klarnamodel = $this->model('model_klarna');
-		$klarnamodel->checkStatus($klarnaId);
+	public function order_checkstatus($paymentId){
+		$payexmodel = $this->model('model_payex');
+		$ordermodel = $this->model('model_orders');
+		$status = $payexmodel->confirm($paymentId);
+		if($status[0]){
+			$ordermodel->updateOrderStatus($paymentId, "APPROVED");
+		}
+		header('Location: ' . $_SERVER['HTTP_REFERER']);
 	}
 	
 	public function order_export($type, $var = null){

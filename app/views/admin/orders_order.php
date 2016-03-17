@@ -3,22 +3,13 @@
 		<div class="col-md-6 control-create">
 			<h3 class="control-header">Order id #<?=$data[0][0]['id']?></h3>
 			<h4>Skapad: <?=date("Y-m-d h:m", $data[0][0]['time'])?></h4>
-			<h4>Klarna ID: <?=$data[0][0]['klarna']?></h4>
+			<h4>Klarna ID: <?=$data[0][0]['payment']?></h4>
 			<h4>Status: <?=$data[0][0]['status']?></h4>
 			<?php
-				if($data[0][0]['status'] == "ACTIVE"){
-					echo '
-						<a href="/admin/orders/order_refund/' . $data[0][0]['klarna'] . '/' . $data[0][0]['id'] . '" class="btn accept" style="padding-top: 12px; color: #fff !important; margin: 5px 0; 								background: #c0392b;">
-							Återbetala
-						</a>';
-				}else if ($data[0][0]['status'] == "REFUNDED" || $data[0][0]['status'] == "CANCELED"){
-				}else{
+				if ($data[0][0]['status'] == "PENDING"){
 				?>
-				<a href="/admin/orders/order_decline/<?=$data[0][0]['klarna']?>/<?=$data[0][0]['id']?>" class="btn accept" style="padding-top: 12px; color: #fff !important; margin-top: 30px; background: 						#e67e22;">
-					Neka order
-				</a>
-				<a href="/admin/orders/order_activate/<?=$data[0][0]['klarna']?>/<?=$data[0][0]['id']?>" class="btn accept" style="padding-top: 12px; color: #fff !important; margin-top: 5px; background: 						#35cf76;">
-					Debitera kund
+				<a href="/admin/orders/order_checkstatus/<?=$data[0][0]['payment']?>" class="btn accept" style="padding-top: 12px; color: #fff !important; margin-top: 30px; background: 						#e67e22;">
+					Kontrollera status
 				</a>
 				<?php		
 				}
@@ -34,10 +25,8 @@
 				}
 			?>
 			<h2>Order</h2>
-			<p>Klarnas fakturor har alla en typ av status!</p>
-			<p>PENDING: Betyder att statusen på fakturan ej är känd! Det går oftast ändå att aktivera fakturan!</p>
-			<p>RESERVED: Detta betyder att en kreditvärdering har gjorts på kunden och att systemet väntar på ett godkännande från administratör!</p>
-			<p>ACTIVE: Detta betyder att klarna nu har fått bekräftelse på att administratör godkänt ordern och faktura har blivit utskickat! Du kan nu skicka produkten</p>
+			<p>PENDING: Betyder att statusen på betalningen ej är känd! Klicka på kontrollera status för att uppdatera statusen!</p>
+			<p>APPROVED: Detta betyder att betalnigen nu har fått bekräftelse på att ordern är godkänd. Du kan nu skicka produkten</p>
 			<p>REFUNDED: Detta betyder att en administratör har gjort en återbetalning till kunden på ordern</p>
 		</div>
 	</div>

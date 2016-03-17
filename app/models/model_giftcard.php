@@ -15,10 +15,7 @@ class model_giftcard
 			WHERE
 				order_items.order = ?";
 		$result = $GLOBALS['db']->query($sql, $orderId);
-		if($result[0]['category'] == "SUM"){
-			header("Location: /admin/giftcard/show/" . $orderId);
-			die;
-		}
+		
 		
 		//Select order items and add the sum together minus any used ones
 		$sql = "
@@ -35,7 +32,7 @@ class model_giftcard
 			$used = $row['used'];
 			$amount = $count - $used;
 			
-			$newSum += $row['cost'] * $amount; 		
+			$newSum += $row['cost'] * $amount; 	
 		}
 		
 		//Sum calculation done move items to history for traceback and insert new sum item
@@ -45,9 +42,9 @@ class model_giftcard
 					order_items_history
 						(order_items_history.order, item_id, category, count, used, cost)
 				VALUES
-					('". $row['order'] ."', '". $row['item_id'] ."', '". $row['category'] ."', '". $row['count'] ."', '". $row['used'] ."', '". $row['cost'] ."')";
-			$GLOBALS['db']->query($sql);
-			
+					(?, ?, ?, ?, ? ,?)";
+			$GLOBALS['db']->query($sql, array($row['order'], $row['item_id'], $row['category'], $row['count'], $row['used'], $row['cost']));
+
 			//If fail dont remove from db
 			if($GLOBALS['db']->affectedRow() == 0){
 				header("Location: /admin/giftcard/show/" . $orderId);
@@ -118,6 +115,91 @@ class model_giftcard
 		}else{
 			return false;
 		}
+	}
+	
+	public function create($isSum){
+		//Create order in our system
+		$sql = "
+				INSERT INTO 
+					orders 
+					(fname, lname, email, address, postal, city, country, phone, shipping_alternative, message, code, time, expires, status, type)
+				VALUES 
+					(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?);";
+		$GLOBALS['db']->query($sql, 
+							array($_POST['fname'],
+								$_POST['lname'],
+								$_POST['email'],
+								$_POST['address'],
+								$_POST['postal'],
+								$_POST['city'],
+								$_POST['country'],
+								$_POST['phone'],
+								"3",
+								$_POST['message'],
+								substr(hash('sha512', uniqid() . rand(1, 1000)), 1, 8),
+								time(),
+								$_POST['expires']*2592000,
+								"APPROVED",
+								$_POST['type']));
+		$id = $GLOBALS['db']->lastInsertedId();
+		//Create relation table for products and extras in order
+		//Select id from order
+		$sql = "SELECT 
+					id
+				FROM
+					orders
+				WHERE
+					id = ?";
+		$id = $GLOBALS['db']->query($sql, $id);
+		//Fist insert product
+		//If value sum count = amount && category = sum
+		if($isSum[0]['type'] == "sum"){
+			$count = $_POST['product-count'];
+			$category = "SUM";
+		}else{
+			$count = $_POST['product-count'];
+			$category = "PRODUCT";
+		}
+		
+		//Get current price
+		$sql = "SELECT
+					price
+				FROM
+					products
+				WHERE
+					id = ?";
+		$cost = $GLOBALS['db']->query($sql, $_POST['product-id']);
+		
+		//Initiate insert
+		$sql = "INSERT INTO 
+					order_items
+					(`order`, item_id, category, count, cost) 
+				VALUES 
+					(?,?,?,?,?)";
+		$GLOBALS['db']->query($sql, array($id[0]['id'], $_POST['product-id'], $category, $count, $cost[0]['price']));
+		
+		//Insert every extras
+		if(count($_POST['extras']) >= 1){
+			foreach($_POST['extras'] as $row){
+				//Get current price
+				$sql = "SELECT
+							price
+						FROM
+							extras
+						WHERE
+							id = ?";
+				$cost = $GLOBALS['db']->query($sql, $row);
+	
+				$sql = "
+					INSERT INTO 
+						order_items
+						(`order`, item_id, category, count, cost) 
+					VALUES 
+						(?,?,?,1,?)";
+				$GLOBALS['db']->query($sql, array($id[0]['id'], $row, "EXTRAS", $cost[0]['price']));
+			}
+		}
+		return $id;	
 	}
 	
 }

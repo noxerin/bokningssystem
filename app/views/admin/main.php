@@ -1,29 +1,5 @@
-<div class="container" style="margin-top: 50px;">
-	<div class="col-md-2 latest-boxes latest-boxes-1">
-		<div class="latest-text">
-			<h1>1</h1>
-			<small>Nya köp idag</small>
-		</div>
-	</div>
-	<div class="col-md-2 col-md-offset-1 latest-boxes latest-boxes-3">
-		<div class="latest-text">
-			<h1>10</h1>
-			<small>Totalt sålda</small>
-		</div>
-	</div>
-	<div class="col-md-2 col-md-offset-1 latest-boxes latest-boxes-2">
-		<div class="latest-text">
-			<h1>2</h1>
-			<small>Bokningar för idag</small>
-		</div>
-	</div>
-	<div class="col-md-2 col-md-offset-1 latest-boxes latest-boxes-4">
-		<div class="latest-text">
-			<h1>200</h1>
-			<small>Totalt antal bokningar</small>
-		</div>
-	</div>
-	<div class="col-md-12" style="margin-top: 30px;">
+<div class="container" style="margin-top: 10px;">
+	<div class="col-md-12">
 		<h2>Statistik</h2>
 	</div>
 	<div class="col-md-12 latest-actions">
@@ -100,7 +76,7 @@ var myLineChart = new Chart(ctx[0]).Line(data, {
 var data = [
  <?php
 	$int = 1;
-	foreach($data[2] as $row){
+	foreach($data[1] as $row){
 		switch($int){
 		    case 1:
 		    	echo '

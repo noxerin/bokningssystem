@@ -7,7 +7,7 @@
 		</div>
 		<div class="col-md-6">
 			<?php
-				if($data[1][0]['category'] != "SUM"){
+				if($data[1][0]['category'] != "SUM" || $data[2][0]['category'] == "EXTRAS"){
 					echo '<a href="" style="float: right; margin-right: 10px; background: #f18477;" class="box-link">Förläng giltighetstid</a>
 						<small>* Obs vid förlängning så måste kort omvandlas till summa för att kunna subtrahera -10% av totalsumman</small>';
 					echo '

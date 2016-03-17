@@ -2,6 +2,209 @@
 class model_orders
 {
 	
+	public function create(){
+		
+		//Create order in our system
+		$sql = "
+				INSERT INTO 
+					orders 
+					(fname, lname, email, address, postal, city, country, phone, shipping_alternative, image, message, code, time)
+				VALUES 
+					(?,?,?,?,?,?,?,?,?,?,?,?,?);";
+		$GLOBALS['db']->query($sql, 
+							array($_SESSION['buyer']['fname'],
+								$_SESSION['buyer']['lname'],
+								$_SESSION['buyer']['email'],
+								$_SESSION['buyer']['address'],
+								$_SESSION['buyer']['postal'],
+								$_SESSION['buyer']['city'],
+								$_SESSION['buyer']['country'],
+								$_SESSION['buyer']['phone'],
+								$_SESSION['buyer']['alternative'],
+								$_SESSION['image'],
+								$_SESSION['message'],
+								substr(hash('sha512', uniqid() . rand(1, 1000)), 1, 8),
+								time()));
+		$id = $GLOBALS['db']->lastInsertedId();
+		//Create relation table for products and extras in order
+		//Select id from order
+		$sql = "SELECT 
+					id
+				FROM
+					orders
+				WHERE
+					id = ?";
+		$id = $GLOBALS['db']->query($sql, $id);
+		//Fist insert product
+		//If value sum count = amount && category = sum
+		if($_SESSION['count'] == "sum"){
+			$count = $_SESSION['sum'];
+			$category = "SUM";
+		}else{
+			$count = $_SESSION['count'];
+			$category = "PRODUCT";
+		}
+		
+		//Get current price
+		$sql = "SELECT
+					price
+				FROM
+					products
+				WHERE
+					id = ?";
+		$cost = $GLOBALS['db']->query($sql, $_SESSION['product']);
+		
+		//Initiate insert
+		$sql = "INSERT INTO 
+					order_items
+					(`order`, item_id, category, count, cost) 
+				VALUES 
+					(?,?,?,?,?)";
+		$GLOBALS['db']->query($sql, array($id[0]['id'], $_SESSION['product'], $category, $count, $cost[0]['price']));
+		
+		//Insert every extras
+		if(strlen($_SESSION['extras'][0]) >= 1){
+			foreach($_SESSION['extras'] as $row){
+				//Get current price
+				$sql = "SELECT
+							price
+						FROM
+							extras
+						WHERE
+							id = ?";
+				$cost = $GLOBALS['db']->query($sql, $row);
+	
+				$sql = "
+					INSERT INTO 
+						order_items
+						(`order`, item_id, category, count, cost) 
+					VALUES 
+						(?,?,?,1,?)";
+				$GLOBALS['db']->query($sql, array($id[0]['id'], $row, "EXTRAS", $cost[0]['price']));
+			}
+		}
+		
+		return $id;
+		
+	}
+	
+	public function update($orderId){
+		//Create order in our system
+		$sql = "
+				UPDATE
+					orders 
+				SET 
+					fname = ?, lname = ?, email = ?, address = ?, postal = ?, city = ?, country = ?, phone = ?, shipping_alternative = ?, image = ?, message = ?, code = ?, time = ?
+				WHERE
+					id = ?;";
+		$GLOBALS['db']->query($sql, 
+							array($_SESSION['buyer']['fname'],
+								$_SESSION['buyer']['lname'],
+								$_SESSION['buyer']['email'],
+								$_SESSION['buyer']['address'],
+								$_SESSION['buyer']['postal'],
+								$_SESSION['buyer']['city'],
+								$_SESSION['buyer']['country'],
+								$_SESSION['buyer']['phone'],
+								$_SESSION['buyer']['alternative'],
+								$_SESSION['image'],
+								$_SESSION['message'],
+								substr(hash('sha512', uniqid() . rand(1, 1000)), 1, 8),
+								time(),
+								$orderId));
+		//Create relation table for products and extras in order
+		//Select id from order
+		$sql = "SELECT 
+					id
+				FROM
+					orders
+				WHERE
+					id = ?";
+		$id = $GLOBALS['db']->query($sql, $orderId);
+		//Fist insert product
+		//If value sum count = amount && category = sum
+		if($_SESSION['count'] == "sum"){
+			$count = $_SESSION['sum'];
+			$category = "SUM";
+		}else{
+			$count = $_SESSION['count'];
+			$category = "PRODUCT";
+		}
+		
+		//Get current price
+		$sql = "SELECT
+					price
+				FROM
+					products
+				WHERE
+					id = ?";
+		$cost = $GLOBALS['db']->query($sql, $_SESSION['product']);
+		
+		$sql = "
+			DELETE FROM
+				order_items
+			WHERE
+				order_items.order = ?";
+		$GLOBALS['db']->query($sql, $orderId);
+		
+		//Initiate insert
+		$sql = "INSERT INTO 
+					order_items
+					(order_items.order, item_id, category, count, cost) 
+				VALUES 
+					(?,?,?,?,?)";
+		$GLOBALS['db']->query($sql, array($orderId, $_SESSION['product'], $category, $count, $cost[0]['price']));
+		
+		//Insert every extras
+		if(strlen($_SESSION['extras'][0]) >= 1){
+			foreach($_SESSION['extras'] as $row){
+				//Get current price
+				$sql = "SELECT
+							price
+						FROM
+							extras
+						WHERE
+							id = ?";
+				$cost = $GLOBALS['db']->query($sql, $row);
+	
+				$sql = "
+					INSERT INTO 
+						order_items
+						(`order`, item_id, category, count, cost) 
+					VALUES 
+						(?,?,?,1,?)";
+				$GLOBALS['db']->query($sql, array($orderId, $row, "EXTRAS", $cost[0]['price']));
+			}
+		}
+		
+	}
+	
+	public function remove($orderId){
+		$sql = "
+			SET SQL_SAFE_UPDATES = 0;
+			DELETE FROM
+				orders
+			WHERE
+				id = ?;
+			DELETE FROM
+				order_items
+			WHERE
+				order_items.order = ?";
+		$GLOBALS['db']->query($sql, array($orderId, $orderId));
+	}
+	
+	public function updateOrderStatus($payment, $status){
+		$sql = "
+			SET SQL_SAFE_UPDATES = 0;
+			UPDATE
+				orders
+			SET
+				orders.status = ?
+			WHERE
+				payment = ?";
+		$GLOBALS['db']->query($sql, array($status, $payment));
+	}
+	
 	public function retriveLastOrders($count){
 		$sql = "
 			SELECT
@@ -33,7 +236,7 @@ class model_orders
 			FROM
 				orders
 			WHERE
-				((fname LIKE ?) OR (lname LIKE ?) OR (address LIKE ?) OR (code LIKE ?) OR (klarna LIKE ?) OR (id LIKE ?) OR (FROM_UNIXTIME(time, '%Y-%m-%d') LIKE ?) OR (status LIKE ?))
+				((fname LIKE ?) OR (lname LIKE ?) OR (address LIKE ?) OR (code LIKE ?) OR (payment LIKE ?) OR (id LIKE ?) OR (FROM_UNIXTIME(time, '%Y-%m-%d') LIKE ?) OR (status LIKE ?))
 			ORDER BY
 				id
 					DESC";
@@ -50,9 +253,9 @@ class model_orders
 			FROM
 				orders
 			WHERE
-				((fname LIKE ?) OR (lname LIKE ?) OR (address LIKE ?) OR (code LIKE ?) OR (klarna LIKE ?) OR (id LIKE ?) OR (FROM_UNIXTIME(time, '%Y-%m-%d') LIKE ?) OR (status LIKE ?))
+				((fname LIKE ?) OR (lname LIKE ?) OR (address LIKE ?) OR (code LIKE ?) OR (payment LIKE ?) OR (id LIKE ?) OR (FROM_UNIXTIME(time, '%Y-%m-%d') LIKE ?) OR (status LIKE ?))
 			AND	
-				status = 'ACTIVE'
+				status = 'APPROVED'
 			ORDER BY
 				id
 					DESC";
@@ -116,37 +319,37 @@ class model_orders
 
 	}
 	
-	public function retriveOrderByKlarnaId($klarna){
+	public function retriveOrderByPaymentId($payment){
 		$sql = "
 			SELECT
 				*
 			FROM
 				orders
 			WHERE
-				klarna = ?";
-		return $GLOBALS['db']->query($sql, $klarna);
+				payment = ?";
+		return $GLOBALS['db']->query($sql, $payment);
 	}
 	
-	public function markAs($klarnaId, $mark){
+	public function markAs($paymentId, $mark){
 		$sql = "
 			UPDATE
 				orders
 			SET
 				status = ?
 			WHERE
-				klarna = ?";
-		$GLOBALS['db']->query($sql, array($mark, $klarnaId));
+				payment = ?";
+		$GLOBALS['db']->query($sql, array($mark, $paymentId));
 	}
 	
-	public function updateKlarnaNumber($currentKlarnaId, $klarnaInvoice){
+	public function updatePaymentNumber($currentpaymentId, $paymentInvoice){
 		$sql = "
 			UPDATE
 				orders
 			SET
-				klarna = ?
+				payment = ?
 			WHERE
-				klarna = ?";
-		$GLOBALS['db']->query($sql, array($klarnaInvoice, $currentKlarnaId));
+				payment = ?";
+		$GLOBALS['db']->query($sql, array($paymentInvoice, $currentpaymentId));
 	}
 	
 	public function calculateTotalSum($orderId){
@@ -206,7 +409,9 @@ class model_orders
 			FROM
 				orders
 			WHERE
-				id= ?";
+				id= ?
+			AND
+				type = 'CUSTOMER'";
 		$order = $GLOBALS['db']->query($sql, $orderId);
 		
 		$sql = "

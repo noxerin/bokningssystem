@@ -30,7 +30,7 @@
 			<div class="col-md-5 cell">
 				<i>Address:</i>
 				<br>
-				<input type="text" name="adress" class="input" required>
+				<input type="text" name="address" class="input" required>
 			</div>
 			<div class="col-md-2 cell">
 				<i>Postadress:</i> 
@@ -75,7 +75,14 @@
 			<div class="col-md-5 cell">
 				<i>Antal månader:</i>
 				<br>
-				<input type="number" name="phone" class="input" required>
+				<input type="number" name="expires" class="input" required>
+			</div>
+		</div>
+		<div class="row" style="border-bottom: 1px solid #131313;">
+			<div class="col-md-5 cell">
+				<i>Meddelande:</i>
+				<br>
+				<textarea name="message" class="input" required style="width: 760px; height: 70px;"></textarea>
 			</div>
 		</div>
 	</div>
@@ -93,10 +100,10 @@
 					echo '
 					<div class="product-item">
 						<img src="/assets/images/' .$row['image']. '" class="extras-item-img">
-						<input type="number" class="input input-disabled product-count" disabled placeholder="Antala">
+						<input type="number" class="input input-disabled product-count" disabled placeholder="Antal" name="product-count">
 						<p>' . $row['name'] . '</p>
 						<i class="fa fa-check"></i>
-						<input type="checkbox" id="product-id" value="'.$row['id'].'" hidden>
+						<input type="checkbox" class="product-id" value="'.$row['id'].'" hidden name="product-id">
 					</div>';
 				}
 
@@ -197,9 +204,11 @@
 <script>
 	$(".product-item").on("click", function(){
 		$(".product-item i").removeClass("selected");
-		$(".product-count").prop("disabled", true).addClass("input-disabled");
+		$(".product-count").prop("disabled", true).addClass("input-disabled");	
+		$(".product-id").find("input").prop('checked', false);		
 		$(this).find(".fa-check").addClass("selected");
 		$(this).find('.product-count').prop("disabled", false).removeClass("input-disabled");
+		$(this).find("input").prop('checked', true);
 	});
 
 	$(".extras-item").on("click", function(){

@@ -96,7 +96,7 @@
 					<div class="product">
 						<ul>
 							<li class="li1"><p>Presentkort - ' . $data[1][0]['name'] . '</p></li>
-							<li class="li2"><p><input type="number" name="product" class="input" min="0" max="' .$data[1][0]['count'] . '" value="' . $data[1][0]['used'] . '" onkeydown="return false"> 
+							<li class="li2"><p><input type="number" name="product" class="input" min="0" max="' .$data[1][0]['count'] . '" value="' . $data[1][0]['used'] . '" > 
 							/ ' .$data[1][0]['count'] . '</p></li>
 							<li class="li3"><p>' . $data[1][0]['cost'] . ' :-</p></li>
 							<li class="li4"><p>' . $data[1][0]['cost']*$data[1][0]['count'] . ' :-</p></li>
@@ -111,7 +111,7 @@
 							<div class="product">
 								<ul>
 									<li class="li1"><p>Tillägg - ' . $row['name'] . '</p></li>
-									<li class="li2"><p><input type="number" name="addons[]" class="input" min="0" max="' . $row['count'] . '" value="' . $row['used'] . '" onkeydown="return false">
+									<li class="li2"><p><input type="number" name="addons[]" class="input" min="0" max="' . $row['count'] . '" value="' . $row['used'] . '" >
 									/ ' .$row['count'] . '</p></li>
 									<li class="li3"><p>' . $row['cost'] . ' :-</p></li>
 									<li class="li4"><p>' . $row['cost'] . ' :-</p></li>

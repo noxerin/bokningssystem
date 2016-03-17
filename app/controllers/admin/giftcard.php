@@ -11,7 +11,7 @@ class Giftcard extends Controller_Admin
 	
 	public function search($data = null){
 		$ordermodel = $this->model("model_orders");
-		
+
 		$this->view('admin/partials/header', 'The Lodge - Presentkort ');
 		$this->view('admin/partials/menu');
 		$this->view("admin/giftcard", $ordermodel->retriveGiftcardSearchOrders($data));
@@ -80,6 +80,14 @@ class Giftcard extends Controller_Admin
 		$ordermodel->extend($orderId);
 		
 		header("Location: /admin/giftcard/show/".$orderId);
+	}
+	
+	public function create_new(){
+		$giftcardmodel = $this->model('model_giftcard');
+		$productmodel = $this->model('model_product');
+		
+		$id = $giftcardmodel->create($productmodel->isSum($_POST['product-id']));
+		header('Location: /admin/giftcard/show/'.$id[0]['id']);
 	}
 	
 }

@@ -115,7 +115,6 @@ class model_mail{
 		//send the email
 		$mail_sent = @mail($data[0][0]['email'], $subject, $message, $headers);
 		//if the message is sent successfully print "Mail sent". Otherwise print "Mail failed"
-		echo $mail_sent ? "Mail sent" : "Mail failed";
 	}
 	
 }

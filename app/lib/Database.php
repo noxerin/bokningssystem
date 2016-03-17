@@ -109,6 +109,10 @@
 			endif;
 		}
 		
+		public function lastInsertedId(){
+			return $this->pdo->lastInsertId();
+		}
+		
 		/**
 		*	
 		*	Count rows from last query

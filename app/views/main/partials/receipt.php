@@ -1,5 +1,9 @@
 <div class="textcontainer">
-	<h2 style="font-size: 22px; text-align: center;">Granska och betala</h2>
+	<h2 style="font-size: 22px; text-align: center;">Tack för ditt köp</h2>
+	<small style="float: right;">Order referens: #<?=$data[0]['order'][0][0]['id'];?></small>
+	<br>
+	<small style="float: right;">Presentkortskod: <?=$data[0]['order'][0][0]['code'];?></small>
+	<br>
 </div>
 <div class="dottedborder"></div>  
 <div class="itemcontainer">
@@ -14,32 +18,32 @@
 		</div>
 		<?php
 
-			if($_SESSION['count'] == "sum"){
-				$totalsum = $_SESSION['sum'];
+			if($_SESSION['old']['count'] == "sum"){
+				$totalsum = $_SESSION['old']['sum'];
 				echo '
 					<div class="product">
 						<ul>
 							<li class="li1"><p>Presentkort - ' . $data[0]['product']['name'] . '</p></li>
 							<li class="li2"><p>1</p></li>
-							<li class="li3"><p>' . $_SESSION['sum'] . ' :-</p></li>
-							<li class="li4"><p>' . $_SESSION['sum'] . ' :-</p></li>
+							<li class="li3"><p>' . $_SESSION['old']['sum'] . ' :-</p></li>
+							<li class="li4"><p>' . $_SESSION['old']['sum'] . ' :-</p></li>
 						</ul>
 						<div class="product-seperator"></div>
 					</div>';
 			}else{
-				$totalsum = $data[0]['product']['price']*$_SESSION['count'];
+				$totalsum = $data[0]['product']['price']*$_SESSION['old']['count'];
 				echo '
 					<div class="product">
 						<ul>
 							<li class="li1"><p>Presentkort - ' . $data[0]['product']['name'] . '</p></li>
-							<li class="li2"><p>' . $_SESSION['count'] . '</p></li>
+							<li class="li2"><p>' . $_SESSION['old']['count'] . '</p></li>
 							<li class="li3"><p>' . $data[0]['product']['price'] . ' :-</p></li>
-							<li class="li4"><p>' . $data[0]['product']['price']*$_SESSION['count'] . ' :-</p></li>
+							<li class="li4"><p>' . $data[0]['product']['price']*$_SESSION['old']['count'] . ' :-</p></li>
 						</ul>
 						<div class="product-seperator"></div>
 					</div>';
 			}
-			if(strlen($_SESSION['extras'][0]) > 0){
+			if(strlen($_SESSION['old']['extras'][0]) > 0){
 				foreach($data[0]['extras'] as $row){
 					$totalsum += $row['price'];
 					echo '
@@ -70,14 +74,6 @@
 			<h3>Total summa (inkl moms)</h3>
 			<p><?=$totalsum?> kr</p>
 		</div>
-	</div>
-	<div style="margin-top: 10px;">
-		<a href="">
-			<div class="btn" style="float: left; font-size: 12px;">Regler och villkor</div>
-		</a>
-		<a href="complete">
-			<div class="btn">Godkänn och gå till betalning</div>
-		</a>
 	</div>
 </div>
   
