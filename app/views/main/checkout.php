@@ -75,7 +75,7 @@
 				<input type="text" value="<?=$_SESSION['buyer']['phone']?>" name="buyer[phone]" class="inputfield">
 			</div>
 		</div>
-		<div class="iteminputcontainer">
+		<!--<div class="iteminputcontainer">
 			<div class="iteminput">
 				<p>Företagsnamn </p>
 				<input type="text" value="<?=$_SESSION['buyer']['company']?>" name="buyer[company]" class="inputfield">
@@ -85,7 +85,7 @@
 				<input type="text" value="<?=$_SESSION['buyer']['companyid']?>" name="buyer[companyid]" class="inputfield">
 			</div>
 
-		</div>
+		</div>-->
 	</div>
 	<input type="submit" value="Nästa: Välj betalsätt och betala" class="btn" style="right: 20px; position: absolute; bottom: 20px;">	
 </form>

@@ -63,8 +63,8 @@ class model_orders
 		$GLOBALS['db']->query($sql, array($id[0]['id'], $_SESSION['product'], $category, $count, $cost[0]['price']));
 		
 		//Insert every extras
-		if(strlen($_SESSION['extras'][0]) >= 1){
-			foreach($_SESSION['extras'] as $row){
+		if(count($_SESSION['extras']) >= 1){
+			foreach($_SESSION['extras'] as $key => $row){
 				//Get current price
 				$sql = "SELECT
 							price
@@ -72,15 +72,15 @@ class model_orders
 							extras
 						WHERE
 							id = ?";
-				$cost = $GLOBALS['db']->query($sql, $row);
+				$cost = $GLOBALS['db']->query($sql, $key);
 	
 				$sql = "
 					INSERT INTO 
 						order_items
 						(`order`, item_id, category, count, cost) 
 					VALUES 
-						(?,?,?,1,?)";
-				$GLOBALS['db']->query($sql, array($id[0]['id'], $row, "EXTRAS", $cost[0]['price']));
+						(?,?,?,?,?)";
+				$GLOBALS['db']->query($sql, array($id[0]['id'], $key, "EXTRAS", $_SESSION['extras'][$key] ,$cost[0]['price']));
 			}
 		}
 		
@@ -156,8 +156,8 @@ class model_orders
 		$GLOBALS['db']->query($sql, array($orderId, $_SESSION['product'], $category, $count, $cost[0]['price']));
 		
 		//Insert every extras
-		if(strlen($_SESSION['extras'][0]) >= 1){
-			foreach($_SESSION['extras'] as $row){
+		if(count($_SESSION['extras']) >= 1){
+			foreach($_SESSION['extras'] as $key => $row){
 				//Get current price
 				$sql = "SELECT
 							price
@@ -165,15 +165,15 @@ class model_orders
 							extras
 						WHERE
 							id = ?";
-				$cost = $GLOBALS['db']->query($sql, $row);
+				$cost = $GLOBALS['db']->query($sql, $key);
 	
 				$sql = "
 					INSERT INTO 
 						order_items
 						(`order`, item_id, category, count, cost) 
 					VALUES 
-						(?,?,?,1,?)";
-				$GLOBALS['db']->query($sql, array($orderId, $row, "EXTRAS", $cost[0]['price']));
+						(?,?,?,?,?)";
+				$GLOBALS['db']->query($sql, array($orderId, $key, "EXTRAS", $_SESSION['extras'][$key] ,$cost[0]['price']));
 			}
 		}
 		
@@ -212,7 +212,11 @@ class model_orders
 			FROM
 				orders
 			ORDER BY
-				(case 
+				time
+					DESC
+			LIMIT 
+				$count";
+			/**(case 
 					status 
 					WHEN 'PENDING' THEN 1
 					WHEN 'RESERVED' THEN 1
@@ -220,9 +224,7 @@ class model_orders
 					WHEN 'REFUNDED' THEN 3
 					WHEN 'CANCELED' THEN 3
 					ELSE 4 END)
-			LIMIT 
-				$count";
-			
+			**/
 		return $GLOBALS['db']->query($sql);			
 			
 	}
@@ -455,7 +457,9 @@ class model_orders
 			WHERE
 				time 
 					BETWEEN 
-						? and ?";
+						? and ?
+			AND
+				type = 'CUSTOMER'";
 		$order = $GLOBALS['db']->query($sql, array($timeSpanStart, $timeSpanEnd));
 		
 		$count = 0;
@@ -541,7 +545,7 @@ class model_orders
 			UPDATE
 				orders
 			SET
-				expires = orders.expires + '63072000'
+				expires = orders.expires + '15768000'
 			WHERE
 				id = ?";
 		$GLOBALS['db']->query($sql, $orderId);

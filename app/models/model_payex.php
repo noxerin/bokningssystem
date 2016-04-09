@@ -24,8 +24,8 @@ class model_payex
 		
 		$productDesc .= $products['product']['name'];
 		$ivol->addOrderLine($products['product']['name'], $productCount, $products['product']['price'], 0);
-		foreach($products['extras'] as $row){
-			$ivol->addOrderLine($row['name'], 1, $row['price'], 0);
+		foreach($products['extras'] as $row ){
+			$ivol->addOrderLine($row['name'], $products['extras_count'][$row['id']], $row['price'], 0);
 			$productDesc .= ", " . $row['name'];
 		}
 		$ivol->addOrderLine($products['shipping']['title'], 1, $products['shipping']['cost'], 0);

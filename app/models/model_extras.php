@@ -40,8 +40,10 @@ class model_extras
 	
 	public function getSelected($ids){
 		$vars = "";
-		for($i = 0; count($ids) > $i; $i++){
+		$id = array();
+		foreach($ids as $key => $row){
 			$vars = $vars . "? ,";
+			array_push($id, $key);
 		}
 		$vars = rtrim($vars, ",");
 		$sql = "
@@ -52,8 +54,7 @@ class model_extras
 			WHERE
 				e.id 
 					IN (" . $vars . ")";
-
-		return $GLOBALS['db']->query($sql, $ids);;	
+		return $GLOBALS['db']->query($sql, $id);
 	}
 	
 		public function updateimage($id, $fileid){

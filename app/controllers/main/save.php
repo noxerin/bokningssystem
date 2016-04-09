@@ -50,10 +50,12 @@ class Save extends Controller
 	
 	public function extras(){
 		$headTo = "/preview";
-		if(isset($_POST['extras']) && strlen($_POST['extras']) >= 1){
-			$_SESSION['extras'] = explode(",", $_POST['extras']);
-		}else{
-			$_SESSION['extras'] = "";
+		unset($_SESSION['extras']);
+
+		if(isset($_POST) && count($_POST) >= 1){
+			foreach($_POST['extra-id'] as $key => $row){
+				$_SESSION['extras'][$row] = $_POST['extra-count'][$key];
+			}
 		}
 		header("Location: $headTo");
 	}

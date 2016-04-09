@@ -16,14 +16,14 @@
 				echo '
 				<div class="item" data-id="' . $row['id'] . '">
 					<img src="/assets/images/' . $row['image'] . '">
-					<img src="/assets/checked.png" class="checkedimg selected">
+					<div class="checkedimg selected"></div>
 					<h1>' . $row['name'] . '</h1>
 					<p><b>' . $price . '</b></p>
 				</div>';
 			}else{
 				echo '<div class="item" data-id="' . $row['id'] . '">
 						<img src="/assets/images/' . $row['image'] . '">
-						<img src="/assets/checked.png" class="checkedimg" style="display: none;">
+						<div class="checkedimg" style="display: none;"></div>
 						<h1>' . $row['name'] . '</h1>
 						<p><b>' . $price . '</b></p>
 					</div>';

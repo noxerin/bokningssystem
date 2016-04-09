@@ -4,6 +4,8 @@
 			<h3 class="control-header">Presentkort: <?=$data[0][0]['code']?></h3>
 			<h4>Skapad: <?=date("Y-m-d h:m", $data[0][0]['time'])?></h4>
 			<h4>Löper ut: <?=date("Y-m-d h:m", $data[0][0]['time'] + $data[0][0]['expires'])?></h4>
+			<h4>Typ: <?=$data[0][0]['type']?></h4>
+
 		</div>
 		<div class="col-md-6">
 			<?php
@@ -17,7 +19,7 @@
 					';	
 				}else{	
 					echo '<a href="/admin/giftcard/extend/' . $data[0][0]['id'] . '" style="float: right; margin-right: 10px;" class="box-link">Förläng giltighetstid</a>
-					<small>* Obs vid förlängning så tillkommer en subtraktion på -10% av totalsumman och en förlängs med 2 år</small>';
+					<small>* Obs vid förlängning så tillkommer en subtraktion på -10% av totalsumman och en förlängs med 6 månader</small>';
 				}
 			?>
 			<a href="/admin/giftcard/edit/<?=$data[0][0]['id']?>" class="btn" style="padding-top: 12px; color: #fff !important; margin-top: 30px; background: #35cf76;">
@@ -117,14 +119,14 @@
 
 					if(count($data[2]) > 0){
 						foreach($data[2] as $row){
-							$totalSum += $row['cost'];
+							$totalSum += $row['cost']*$row['count'];
 							echo '
 							<div class="product">
 								<ul>
 									<li class="li1"><p>Tillägg - ' . $row['name'] . '</p></li>
 									<li class="li2"><p>' . $row['used'] . ' / ' .$row['count'] . '</p></li>
 									<li class="li3"><p>' . $row['cost'] . ' :-</p></li>
-									<li class="li4"><p>' . $row['cost'] . ' :-</p></li>
+									<li class="li4"><p>' . $row['cost']*$row['count'] . ' :-</p></li>
 								</ul>
 								<div class="product-seperator"></div>
 							</div>';

@@ -56,14 +56,14 @@
 
 				if(count($data[0][2]) > 0){
 					foreach($data[0][2] as $row){
-						$totalSum += $row['cost'];
+						$totalSum += $row['cost']*$row['count'];
 						echo '
 						<div class="product">
 							<ul>
 								<li class="li1"><p>Tillägg - ' . $row['name'] . '</p></li>
-								<li class="li2"><p>' . $row['used'] . ' / 1</p></li>
+								<li class="li2"><p>' . $row['used'] . ' / '. $row['count'] .'</p></li>
 								<li class="li3"><p>' . $row['cost'] . ' :-</p></li>
-								<li class="li4"><p>' . $row['cost'] . ' :-</p></li>
+								<li class="li4"><p>' . $row['cost']*$row['count'] . ' :-</p></li>
 							</ul>
 							<div class="product-seperator"></div>
 						</div>';

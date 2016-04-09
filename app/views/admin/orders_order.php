@@ -3,15 +3,25 @@
 		<div class="col-md-6 control-create">
 			<h3 class="control-header">Order id #<?=$data[0][0]['id']?></h3>
 			<h4>Skapad: <?=date("Y-m-d h:m", $data[0][0]['time'])?></h4>
-			<h4>Klarna ID: <?=$data[0][0]['payment']?></h4>
+			<h4>Payment ID: <?=$data[0][0]['payment']?></h4>
 			<h4>Status: <?=$data[0][0]['status']?></h4>
+			<h4>Typ: <?=$data[0][0]['type']?></h4>
 			<?php
-				if ($data[0][0]['status'] == "PENDING"){
+				if ($data[0][0]['status'] == "PENDING" || $data[0][0]['status'] == "FAILED"){
 				?>
-				<a href="/admin/orders/order_checkstatus/<?=$data[0][0]['payment']?>" class="btn accept" style="padding-top: 12px; color: #fff !important; margin-top: 30px; background: 						#e67e22;">
+				<a href="/admin/orders/order_checkstatus/<?=$data[0][0]['payment']?>" class="btn accept" 
+					style="padding-top: 12px; color: #fff !important; margin-top: 30px; background: #e67e22;">
 					Kontrollera status
 				</a>
 				<?php		
+				}
+				if ($data[0][0]['status'] == "FAILED"){
+				?>
+					<a href="/admin/orders/remove/<?=$data[0][0]['id']?>" class="btn accept" 
+					style="padding-top: 12px; color: #fff !important; margin-top: 30px; background: red;">
+					Ta bort order
+				</a>
+				<?php
 				}
 			?>
 		</div>
@@ -27,7 +37,8 @@
 			<h2>Order</h2>
 			<p>PENDING: Betyder att statusen på betalningen ej är känd! Klicka på kontrollera status för att uppdatera statusen!</p>
 			<p>APPROVED: Detta betyder att betalnigen nu har fått bekräftelse på att ordern är godkänd. Du kan nu skicka produkten</p>
-			<p>REFUNDED: Detta betyder att en administratör har gjort en återbetalning till kunden på ordern</p>
+			<p>FAILED: Detta betyder att kunden kan ha avbrutit sitt köp. Vänta några dagar och försök igen, annars ta bort order ur systemet</p>
+			<p>DENIED: Detta betyder att kundens kort har blivit avslaget. Vänta några dagar och försök igen, annars ta bort order ur systemet</p>			
 		</div>
 	</div>
 </div>
@@ -122,14 +133,14 @@
 
 					if(count($data[2]) > 0){
 						foreach($data[2] as $row){
-							$totalSum += $row['cost'];
+							$totalSum += $row['cost']*$row['count'];
 							echo '
 							<div class="product">
 								<ul>
 									<li class="li1"><p>Tillägg - ' . $row['name'] . '</p></li>
 									<li class="li2"><p>' . $row['used'] . ' / ' .$row['count'] . '</p></li>
 									<li class="li3"><p>' . $row['cost'] . ' :-</p></li>
-									<li class="li4"><p>' . $row['cost'] . ' :-</p></li>
+									<li class="li4"><p>' . $row['cost']*$row['count'] . ' :-</p></li>
 								</ul>
 								<div class="product-seperator"></div>
 							</div>';

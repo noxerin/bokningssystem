@@ -30,7 +30,7 @@ class Checkout extends Controller
 		//Fetch data about product and extras
 		$products = $product->getProduct($_SESSION['product']);
 		$data['product'] = $products[0];
-		if(strlen($_SESSION['extras'][0]) > 0){
+		if(count($_SESSION['extras']) > 0){
 			$extras = $extra->getSelected($_SESSION['extras']);			
 			$data['extras'] = $extras;
 		}
@@ -81,9 +81,10 @@ class Checkout extends Controller
 		//Fetch data about product and extras
 		$products = $product->getProduct($_SESSION['product']);
 		$data['product'] = $products[0];
-		if(strlen($_SESSION['extras'][0]) > 0){
+		if(count($_SESSION['extras']) > 0){
 			$extras = $extra->getSelected($_SESSION['extras']);			
 			$data['extras'] = $extras;
+			$data['extras_count'] = $_SESSION['extras'];
 		}
 
 		//Determine if product is value sum
@@ -166,7 +167,7 @@ class Checkout extends Controller
 		//Fetch data about product and extras
 		$products = $product->getProduct($_SESSION['old']['product']);
 		$data['product'] = $products[0];
-		if(strlen($_SESSION['old']['extras'][0]) > 0){
+		if(count($_SESSION['old']['extras']) > 0){
 			$extras = $extra->getSelected($_SESSION['old']['extras']);			
 			$data['extras'] = $extras;
 		}

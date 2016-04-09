@@ -1,7 +1,7 @@
 <div class="container" style="margin-top: 50px;">
 	<div class="col-md-10 col-md-offset-1 control">
 		<div class="col-md-6 control-create">
-			<h3 class="control-header">Skapa / tilldela tillägg</h3>
+			<h3 class="control-header">Skapa tillägg</h3>
 			<a href="/admin/extras/add" class="btn" style="padding-top: 12px; color: #fff !important; margin-top: 30px;">Lägg till</a>
 		</div>
 		<div class="col-md-6">

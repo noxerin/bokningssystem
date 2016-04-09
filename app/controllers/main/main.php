@@ -64,7 +64,7 @@ class Main extends Controller
 		$data[0] = $image[0];
 		$data[1] = $products[0];
 		
-		if(strlen($_SESSION['extras'][0]) > 0){
+		if(count($_SESSION['extras']) > 0){
 			$extras = $extra->getSelected($_SESSION['extras']);			
 			$data[2] = $extras;
 		}

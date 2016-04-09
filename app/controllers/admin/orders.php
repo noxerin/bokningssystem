@@ -78,6 +78,8 @@ class Orders extends Controller_Admin
 		$status = $payexmodel->confirm($paymentId);
 		if($status[0]){
 			$ordermodel->updateOrderStatus($paymentId, "APPROVED");
+		}else{
+			$ordermodel->updateOrderStatus($paymentId, "FAILED");			
 		}
 		header('Location: ' . $_SERVER['HTTP_REFERER']);
 	}
@@ -114,6 +116,12 @@ class Orders extends Controller_Admin
 			$ordermodel->shipped($id, 0);
 		}
 		header("Location: /admin/orders/order/".$id);
+	}
+	
+	public function remove($id){
+		$ordermodel = $this->model('model_orders');
+		$ordermodel->remove($id);
+		header("Location: /admin/orders/");
 	}
 
 	

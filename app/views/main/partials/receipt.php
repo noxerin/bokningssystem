@@ -43,16 +43,16 @@
 						<div class="product-seperator"></div>
 					</div>';
 			}
-			if(strlen($_SESSION['old']['extras'][0]) > 0){
+			if(count($_SESSION['old']['extras']) > 0){
 				foreach($data[0]['extras'] as $row){
-					$totalsum += $row['price'];
+					$totalsum += $row['price']*$_SESSION['old']['extras'][$row['id']];
 					echo '
 					<div class="product">
 						<ul>
 							<li class="li1"><p>Tillägg - ' . $row['name'] . '</p></li>
-							<li class="li2"><p>1</p></li>
+							<li class="li2"><p>' . $_SESSION['old']['extras'][$row['id']] . '</p></li>
 							<li class="li3"><p>' . $row['price'] . ' :-</p></li>
-							<li class="li4"><p>' . $row['price'] . ' :-</p></li>
+							<li class="li4"><p>' . $row['price']*$_SESSION['old']['extras'][$row['id']] . ' :-</p></li>
 						</ul>
 						<div class="product-seperator"></div>
 					</div>';
