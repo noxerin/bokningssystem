@@ -17,13 +17,13 @@
 				echo "
 				<div class='item' data-id='" . $row['id'] . "'>
 					<img src='/assets/images/" . $row['src'] . "'>
-					<img src='/assets/checked.png' class='checkedimg selected'>
+					<div class='checkedimg selected'></div>
 				</div>";
 			}else{
 				echo "
 				<div class='item' data-id='" . $row['id'] . "'>
 					<img src='/assets/images/" . $row['src'] . "'>
-					<img src='/assets/checked.png' class='checkedimg' style='display: none;'>
+					<div class='checkedimg' style='display: none;'></div>
 				</div>";
 			}
 		}
@@ -41,8 +41,8 @@
 	</div>
 </form>
 <style>
-	.book{
-		
+	.checkedimg{
+		top: -9px;
 	}
 </style>
 

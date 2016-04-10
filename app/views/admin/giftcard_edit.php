@@ -67,7 +67,12 @@
 			</div>
 			<div class="col-md-4 cell">
 				<i>Leveransstatus:</i>
-				<p><?=$data[0][0]['shipped']?></p> 
+				<p><?php
+					if($data[0][0]['shipped'] == 1){
+						echo "<p>Skickad</p>";
+					}else if($data[0][0]['shipped'] == 0){
+						echo "<p>Ej skickad</p>";
+					}?></p>  
 			</div>
 			<div class="col-md-3 cell">
 				<i>Presentkortskod:</i>

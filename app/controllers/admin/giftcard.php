@@ -90,4 +90,10 @@ class Giftcard extends Controller_Admin
 		header('Location: /admin/giftcard/show/'.$id[0]['id']);
 	}
 	
+	public function printer($orderId){
+		$ordermodel = $this->model("model_orders");
+		
+		$this->view('admin/print', $ordermodel->retriveOrder($orderId));
+	}
+	
 }

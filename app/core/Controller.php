@@ -42,4 +42,12 @@ class Controller
 		require_once 'app/views/' . $view . '.php';
 	}
 	
+	public function loadLib($lib){
+		require_once 'app/lib/'.$lib;
+	}
+	
+	public function loadFile($view){
+		return file_get_contents('app/views/'.$view.'.php');
+	}
+	
 }

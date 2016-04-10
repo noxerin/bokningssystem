@@ -31,7 +31,7 @@ class Save extends Controller
 	public function categorieschoice(){
 		$product = $this->model("model_product");
 		$isSum = $product->isSum($_SESSION['product']);
-				
+		unset($_SESSION['extras']);
 		if($_POST['count'] > 0 && $_POST['count'] > 150 && $isSum[0]['type'] == "sum"){
 				$headTo = "/extras";
 				$_SESSION['count'] = "sum";
@@ -54,7 +54,9 @@ class Save extends Controller
 
 		if(isset($_POST) && count($_POST) >= 1){
 			foreach($_POST['extra-id'] as $key => $row){
-				$_SESSION['extras'][$row] = $_POST['extra-count'][$key];
+				if($_POST['extra-count'][$key] >= 1){
+					$_SESSION['extras'][$row] = $_POST['extra-count'][$key];
+				}
 			}
 		}
 		header("Location: $headTo");

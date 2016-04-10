@@ -13,7 +13,7 @@
 						echo '<h1>' . $_SESSION['count'] . ' st ' . $data[1]['name'] . '</h1>';
 					}
 				if(isset($data[2])){
-					echo "<h2 class='extra'><b>Och så nåt litet extra</b></h2>";
+					echo "<h2 class='extra'><b>Och så något litet extra</b></h2>";
 					foreach($data[2] as $row){
 						echo "<p>" . $row['name'] . "</p>";
 					}

@@ -1,5 +1,9 @@
 <div class="textcontainer">
 	<h2 style="font-size: 22px; text-align: center;">Tack för ditt köp</h2>
+	<?php if($_SESSION['old']['buyer']['alternative'] == 3){ ?>
+	<a  style="float: left; margin-right: 10px; cursor: pointer; border: 1px solid #232323; padding: 5px;" class="box-link" 
+					onclick="window.open('printer', '_blank', 'location=yes,height=800,width=1000,scrollbars=no,status=yes, top=200, left=500');">Skriv ut</a>
+	<?php }?>
 	<small style="float: right;">Order referens: #<?=$data[0]['order'][0][0]['id'];?></small>
 	<br>
 	<small style="float: right;">Presentkortskod: <?=$data[0]['order'][0][0]['code'];?></small>

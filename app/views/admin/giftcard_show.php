@@ -1,6 +1,8 @@
 <div class="container" style="margin-top: 50px;">
 	<div class="col-md-10 col-md-offset-1 control">
 		<div class="col-md-6 control-create">
+				<a  style="float: left; margin-right: 10px; cursor: pointer;" class="box-link" 
+					onclick="window.open('/admin/giftcard/printer/<?=$data[0][0]['id']?>', '_blank', 'location=yes,height=800,width=1000,scrollbars=no,status=yes, top=200, left=500');">Skriv ut</a><br>
 			<h3 class="control-header">Presentkort: <?=$data[0][0]['code']?></h3>
 			<h4>Skapad: <?=date("Y-m-d h:m", $data[0][0]['time'])?></h4>
 			<h4>Löper ut: <?=date("Y-m-d h:m", $data[0][0]['time'] + $data[0][0]['expires'])?></h4>
@@ -76,13 +78,20 @@
 					if($data[0][0]['shipping_alternative'] == 1){
 						echo "<p>Vanligt brev</p>";
 					}else if($data[0][0]['shipping_alternative'] == 2){
-						echo "<p>Special paket</p>";
+						echo "<p>Specialpaket</p>";
+					}else if($data[0][0]['shipping_alternative'] == 3){
+						echo "<p>Nerladdning</p>";
 					}
 				?>
 			</div>
 			<div class="col-md-4 cell">
 				<i>Leveransstatus:</i>
-				<p><?=$data[0][0]['shipped']?></p> 
+				<p><?php
+					if($data[0][0]['shipped'] == 1){
+						echo "<p>Skickad</p>";
+					}else if($data[0][0]['shipped'] == 0){
+						echo "<p>Ej skickad</p>";
+					}?></p>  
 			</div>
 			<div class="col-md-3 cell">
 				<i>Presentkortskod:</i>
@@ -165,6 +174,7 @@
 		</div>
 	</div>
 </div>
+
 <style>	
 .control{
 	background: #f1f1f1;

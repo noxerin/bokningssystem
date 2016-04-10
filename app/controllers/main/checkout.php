@@ -141,6 +141,9 @@ class Checkout extends Controller
 			$mailmodel->mail_confirm($total_data);
 			
 			//Clear session and move it to old
+			if(isset($_SESSION['old'])){
+				unset($_SESSION['old']);
+			}
 			$tempSess = $_SESSION; 
 			session_unset();
 			$_SESSION['old'] = $tempSess;
@@ -200,6 +203,12 @@ class Checkout extends Controller
 		$this->view('main/partials/header', "The Lodge - Presentkort");
 		$this->view('main/partials/receipt', array($data));
 		$this->view('main/partials/footer');
+	}
+	
+	public function printer(){
+		$ordermodel = $this->model("model_orders");
+		
+		$this->view('admin/print', $ordermodel->retriveOrder($_SESSION['old']['currentOrder']));
 	}
 	
 	public function denied(){
