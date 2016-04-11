@@ -317,7 +317,7 @@ class model_orders
 				id = ?";
 		$image = $GLOBALS['db']->query($sql, $order[0]['image']);
 		
-		return array($order, $order_items_product, $order_items_extras);
+		return array($order, $order_items_product, $order_items_extras, $image);
 
 	}
 	

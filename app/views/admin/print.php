@@ -7,7 +7,7 @@
 		<div class="container">
 			<h1 style="letter-spacing: 6.5px; text-align: center; margin-bottom: 0;">LIFE LESS ORDINARY</h1>
 			<div id="userimg">
-				<img id="userimgimg" src="/assets/brasa.jpg">
+				<img id="userimgimg" src="/assets/images/<?=$data[3][0]['src'];?>">
 				<img id="userimgoverlay" src="/assets/thelodge-trasnparent-line.png">
 			</div>
 			<div id="info">
