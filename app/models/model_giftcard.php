@@ -180,7 +180,7 @@ class model_giftcard
 		
 		//Insert every extras
 		if(count($_POST['extras']) >= 1){
-			foreach($_POST['extras'] as $row){
+			foreach($_POST['extras'] as $key => $row){
 				//Get current price
 				$sql = "SELECT
 							price
@@ -195,8 +195,8 @@ class model_giftcard
 						order_items
 						(`order`, item_id, category, count, cost) 
 					VALUES 
-						(?,?,?,1,?)";
-				$GLOBALS['db']->query($sql, array($id[0]['id'], $row, "EXTRAS", $cost[0]['price']));
+						(?,?,?,?,?)";
+				$GLOBALS['db']->query($sql, array($id[0]['id'], $row, "EXTRAS", $_POST['extras-count'][$key] ,$cost[0]['price']));
 			}
 		}
 		return $id;	

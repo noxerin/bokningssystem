@@ -1,6 +1,6 @@
 <form id="codeContainer" action="/book/show">
 	<small>Skriv in din presentkortskod</small>
-	<input type="text" id="code" class="inputfield" name="code" required placeholder="Ex. 49d6-8e41-360d">
+	<input type="text" id="code" class="inputfield" name="code" required placeholder="Ex. 49d6-8e41">
 	<input type="submit" class="btn" value="Nästa" style="margin-top: 20px;">
 </form>
 <style>

@@ -93,7 +93,11 @@ class Giftcard extends Controller_Admin
 	public function printer($orderId){
 		$ordermodel = $this->model("model_orders");
 		
-		$this->view('admin/print', $ordermodel->retriveOrder($orderId));
+		$order = $ordermodel->retriveOrder($orderId);
+		if(is_null($order[0][0]['image'])){
+			$order[3][0]['src'] = "../brasa.jpg";
+		}
+		$this->view('admin/print', $order);
 	}
 	
 }

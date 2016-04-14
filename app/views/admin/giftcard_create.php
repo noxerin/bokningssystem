@@ -5,7 +5,7 @@
 		</div>
 		<div class="col-md-6">
 			<input class="btn " type="submit" form="create" style="padding-top: 12px; color: #fff !important; margin-top: 10px; background: #35cf76;" value="Skapa presentkort">
-			<a href="/admin/giftcard/show/<?=$data[0][0]['id']?>" class="btn" style="padding-top: 12px; color: #fff !important; margin-top: 30px; background: #c0392b;">
+			<a href="/admin/giftcard/" class="btn" style="padding-top: 12px; color: #fff !important; margin-top: 30px; background: #c0392b;">
 				Avbryt
 			</a>
 		</div>
@@ -100,10 +100,10 @@
 					echo '
 					<div class="product-item">
 						<img src="/assets/images/' .$row['image']. '" class="extras-item-img">
-						<input type="number" class="input input-disabled product-count" disabled placeholder="Antal" name="product-count">
+						<input type="number" class="input input-disabled product-count" id=""product-count disabled placeholder="Antal" name="product-count">
 						<p>' . $row['name'] . '</p>
 						<i class="fa fa-check"></i>
-						<input type="checkbox" class="product-id" value="'.$row['id'].'" hidden name="product-id">
+						<input type="checkbox" class="product-id" id="product-id" value="'.$row['id'].'" hidden name="product-id">
 					</div>';
 				}
 
@@ -129,9 +129,10 @@
 					echo '
 					<div class="extras-item">
 						<img src="/assets/images/' .$row['image']. '" class="extras-item-img">
+						<input type="number" class="input input-disabled product-count" disabled placeholder="Antal" name="extras-count[]">
 						<p>' . $row['name'] . '</p>
 						<i class="fa fa-check"></i>
-						<input type="checkbox" value="'.$row['id'].'" hidden name="extras[]">
+						<input type="checkbox" class="extras-id" value="'.$row['id'].'" hidden name="extras[]">
 					</div>';
 				}
 
@@ -204,20 +205,25 @@
 <script>
 	$(".product-item").on("click", function(){
 		$(".product-item i").removeClass("selected");
-		$(".product-count").prop("disabled", true).addClass("input-disabled");	
-		$(".product-id").find("input").prop('checked', false);		
+		$("#product-count").prop("disabled", true).addClass("input-disabled");	
+		$("#product-id").find("input").prop('checked', false);		
 		$(this).find(".fa-check").addClass("selected");
 		$(this).find('.product-count').prop("disabled", false).removeClass("input-disabled");
 		$(this).find("input").prop('checked', true);
 	});
-
-	$(".extras-item").on("click", function(){
-		if($(this).find(".fa-check").hasClass('selected')){
-			$(this).find(".fa-check").removeClass("selected");
-			$(this).find("input").prop('checked', false);		
-		}else{
-			$(this).find(".fa-check").addClass("selected");
-			$(this).find("input").prop('checked', true);		
+	
+	$(".extras-item").on("click", function(e){
+		if($(e.target).attr('class') != "input extra-count"){
+			if($(this).find(".extras-id").hasClass("selected")){
+				$(this).find(".fa-check").removeClass("selected");
+				$(this).find('.product-count').prop("disabled", true).addClass("input-disabled");	
+				$(this).find("input").prop('checked', false);					
+			}else{
+		 		$(this).find(".fa-check").addClass("selected");
+				$(this).find('.product-count').prop("disabled", false).removeClass("input-disabled");
+				$(this).find("input").prop('checked', true);			
+			}
 		}
 	});
+
 </script>
